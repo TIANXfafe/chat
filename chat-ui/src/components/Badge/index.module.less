@@ -1,0 +1,33 @@
+.Badge {
+  position: relative;
+  width: 0;
+  min-width: 0;
+  max-width: 48px;
+  align-items: center;
+  justify-content: center;
+
+  .dot {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 50%;
+    width: 6px;
+    height: 6px;
+    background: #F34848;
+    z-index: 10;
+  }
+
+  .default {
+    display: flex;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #F34848;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 18px 40px 0 rgba(0, 0, 0, .04), 0 6px 12px 0 rgba(0, 0, 0, .08);
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+  }
+}

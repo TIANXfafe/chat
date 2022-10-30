@@ -1,8 +1,6 @@
 import React from 'react';
 import styles from './index.module.less';
 
-import face1 from '../../assets/images/face-male-1.jpg'
-
 interface AvatarProps {
   /**
    * 头像链接
