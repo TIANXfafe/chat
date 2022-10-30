@@ -16,9 +16,12 @@ interface BadgeProps {
    */
   showZero?: boolean;
   /**
-   * 显示数字或红点 true为红点，false为数字或内容
+   * 显示数字或红点 true为红点，false为数字
    */
   variants?: boolean;
+  /**
+   * 内容
+   */
   children?: React.ReactNode;
 }
 
@@ -30,14 +33,35 @@ export const Badge = ({
   children,
   ...props
 }: BadgeProps) => {
-  const renderDefault = () => <div className={styles.default}>{count > 99 ? "99+" : count}</div>
+  /**
+   * 渲染数字
+   */
+  const renderDefault = () => {
+    return (
+      <div
+        className={styles.default}
+        style={{
+          visibility: !variants && !showZero && count === 0 ? "hidden" : "visible",
+          display: show ? "flex" : "none",
+        }}
+      >
+        {count > 99 ? "99+" : count}
+      </div>
+    )
+  }
 
+  /**
+   * 渲染内容
+   */
   const renderDot = () => {
     return (
       <>
         <div
           className={styles.dot}
-          style={{visibility: variants && !showZero && count === 0 ? "hidden" : "visible"}}
+          style={{
+            visibility: !showZero && count === 0 ? "hidden" : "visible",
+            display: show ? "flex" : "none",
+          }}
         />
         {children}
       </>
@@ -46,13 +70,9 @@ export const Badge = ({
 
   return (
     <div
-      {...props}
-      style={{
-        visibility: !variants && !showZero && count === 0 ? "hidden" : "visible",
-        display: show ? "flex" : "none",
-        width: children ? '48px' : 0
-      }}
+      style={{width: children ? '48px' : 0}}
       className={styles.Badge}
+      {...props}
     >
       {variants ? renderDot() : renderDefault()}
     </div>
