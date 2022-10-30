@@ -99,7 +99,8 @@
     "@storybook/testing-library": "^0.0.13",
     "babel-loader": "^8.2.5",
     "less": "^4.1.3",
-    "less-loader": "^11.1.0"
+    "less-loader": "^11.1.0",
+    "storybook-less-loader": "^0.1.0"
   },
   "jest": {
     "roots": [
