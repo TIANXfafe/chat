@@ -1,11 +1,51 @@
-import React from 'react';
+import React, {useState} from 'react';
+import styles from './index.module.less';
 import LoginForm from "../../components/LoginForm";
+import {HandLeft, HandRight} from '@icon-park/react';
 
 const Index = () => {
+  const [maskStyle, setMaskStyle] = useState({});
+  const [leftStyle, setLeftStyle] = useState({});
+  const [rightStyle, setRightStyle] = useState({});
+
+  /**
+   * 切换到注册表单
+   */
+  const goRegister = () => {
+    setMaskStyle({left: '500px'});
+    setLeftStyle({left: 0, zIndex: 1});
+    setRightStyle({left: 0, zIndex: 2});
+  };
+  /**
+   * 切换到登录表单
+   */
+  const goLogin = () => {
+    setMaskStyle({left: 0});
+    setLeftStyle({left: '500px', zIndex: 2});
+    setRightStyle({left: '500px', zIndex: 1});
+  }
+
   return (
-    <div>
-      Login
-      <LoginForm />
+    <div className={styles.container}>
+      <div className={styles.mainContent}>
+        <div className={styles.mask} style={maskStyle} />
+        <div className={styles.leftContent} style={leftStyle}>
+          <h1>登录</h1>
+          <LoginForm />
+          <span onClick={goRegister} className={styles.jumpContent}>
+            <HandLeft theme="filled" size="25" fill="#333" strokeLinejoin="bevel" strokeLinecap="square"/>
+            <span>前往注册</span>
+          </span>
+        </div>
+        <div className={styles.rightContent} style={rightStyle}>
+          <h1>注册</h1>
+          注册
+          <span onClick={goLogin} className={styles.jumpContent}>
+            <span>前往登录</span>
+            <HandRight theme="filled" size="25" fill="#333" strokeLinejoin="bevel" strokeLinecap="square"/>
+          </span>
+        </div>
+      </div>
     </div>
   );
 };
