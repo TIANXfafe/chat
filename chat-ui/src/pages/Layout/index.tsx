@@ -1,11 +1,11 @@
 import React from 'react';
 
-function App() {
+const Index = () => {
   return (
     <div>
-      Hello
+      Layout
     </div>
   );
-}
+};
 
-export default App;
+export default Index;
