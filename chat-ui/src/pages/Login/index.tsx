@@ -12,17 +12,17 @@ const Index = () => {
    * 切换到注册表单
    */
   const goRegister = () => {
-    setMaskStyle({left: '500px'});
-    setLeftStyle({left: 0, zIndex: 1});
-    setRightStyle({left: 0, zIndex: 2});
+    setMaskStyle({left: '510px'});
+    setLeftStyle({left: '20px', zIndex: 1});
+    setRightStyle({left: '20px', zIndex: 2});
   };
   /**
    * 切换到登录表单
    */
   const goLogin = () => {
-    setMaskStyle({left: 0});
-    setLeftStyle({left: '500px', zIndex: 2});
-    setRightStyle({left: '500px', zIndex: 1});
+    setMaskStyle({left: '20px'});
+    setLeftStyle({left: '510px', zIndex: 2});
+    setRightStyle({left: '510px', zIndex: 1});
   }
 
   return (
