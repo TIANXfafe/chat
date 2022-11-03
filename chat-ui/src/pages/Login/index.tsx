@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import styles from './index.module.less';
 import LoginForm from "../../components/LoginForm";
+import RegisterForm from "../../components/RegisterForm";
 import {HandLeft, HandRight} from '@icon-park/react';
 
 const Index = () => {
@@ -39,7 +40,7 @@ const Index = () => {
         </div>
         <div className={styles.rightContent} style={rightStyle}>
           <h1>注册</h1>
-          注册
+          <RegisterForm />
           <span onClick={goLogin} className={styles.jumpContent}>
             <span>前往登录</span>
             <HandRight theme="filled" size="25" fill="#333" strokeLinejoin="bevel" strokeLinecap="square"/>
