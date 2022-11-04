@@ -1,10 +1,109 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Star, PhoneTelephone, MoreApp, Pic, Send} from '@icon-park/react';
+
+import styles from './index.module.less';
+
+import Avatar from "../../components/Avatar";
+
+import face1 from '../../assets/images/face-male-1.jpg';
 
 const Index = () => {
+  const [msgInput, setMsgInput] = useState<string>("");
+
+  /**
+   * input输入框更改事件
+   * @param e
+   */
+  const handleInput = (e: any) => {
+    setMsgInput(e.target.value);
+  }
+  /**
+   * input输入框按键弹起事件
+   * @param e
+   */
+  const handleKeyUp = (e:any) => {
+    if (e.keyCode === 13) {
+      if (msgInput.trim()) {
+        console.log('发送消息')
+      } else {
+        console.log('输入内容不能为空')
+      }
+    }
+  }
+
   return (
-    <div>
-      Layout
-    </div>
+    <section className={styles.layout}>
+      <nav className={styles.sidebar}>Sidebar</nav>
+      <section className={styles.container}>
+        <aside className={styles.subSidebar}>subSidebar</aside>
+        <section className={styles.content}>
+          <header className={styles.header}>
+            <div className={styles.infoContent}>
+              <Avatar src={face1} size="40px"/>
+              <span className={styles.name}>Billy Moon</span>
+            </div>
+            <div className={styles.actionContent}>
+              <Star
+                theme="outline"
+                // theme="filled"
+                size="25"
+                fill="#B2B5BE"
+                strokeLinejoin="bevel"
+                strokeLinecap="butt"
+              />
+              <PhoneTelephone
+                theme="outline"
+                size="25"
+                fill="#B2B5BE"
+                strokeLinejoin="bevel"
+                strokeLinecap="butt"
+              />
+              <MoreApp
+                theme="outline"
+                size="25"
+                fill="#B2B5BE"
+                strokeLinejoin="bevel"
+                strokeLinecap="butt"
+              />
+            </div>
+          </header>
+          <section className={styles.chatContent}>section</section>
+          <footer className={styles.footer}>
+            <div className={styles.sendContent}>
+              <input
+                className={styles.msgInput}
+                type="text"
+                placeholder="请输入"
+                onChange={(e) => handleInput(e)}
+                onKeyUp={(e) => handleKeyUp(e)}
+              />
+              <div className={styles.sendAction}>
+                <label htmlFor="file" className={styles.actionItem}>
+                  <Pic
+                    theme="outline"
+                    size="20"
+                    fill="#E0E0E0"
+                    strokeLinejoin="bevel"
+                    strokeLinecap="square"
+                  />
+                </label>
+                <input id="file" type="file" style={{display: "none"}}/>
+                <button className={styles.sendBtn}>
+                  <Send
+                    theme="outline"
+                    size="20"
+                    fill="#fff"
+                    strokeLinejoin="bevel"
+                    strokeLinecap="square"
+                  />
+                </button>
+              </div>
+
+            </div>
+          </footer>
+        </section>
+      </section>
+    </section>
   );
 };
 
