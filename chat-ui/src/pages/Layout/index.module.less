@@ -8,8 +8,62 @@
   .sidebar {
     width: 80px;
     height: 100%;
-    background: red;
+    background: #0C1D32;
     border-radius: 0 10px 10px 0;
+    padding: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+
+    .menuContent {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 20px;
+      width: 80px;
+      padding-top: 20px;
+      .menuItem {
+        width: 80px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 7.5px 0;
+        position: relative;
+        
+        &::before {
+          position: absolute;
+          content: "";
+          top: 0;
+          left: 0;
+          width: 0;
+          height: 40px;
+          background: #C96FD1;
+          transition: all .2s;
+          border-radius: 2px;
+        }
+        
+        &:hover {
+          &::before {
+            width: 3px;
+          }
+        }
+      }
+    }
+
+    .menuAction {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+
+      & > * {
+        cursor: pointer;
+      }
+    }
   }
 
   .container {
@@ -27,7 +81,210 @@
 
     .subSidebar {
       width: 320px;
-      background: greenyellow;
+      min-width: 320px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+
+      .sideHeader {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .sideBtn {
+          width: 40px;
+          height: 40px;
+          border-radius: 10px;
+          cursor: pointer;
+          border: none;
+          background: #C96FD1;
+          padding: 7.5px;
+          transition: all .2s;
+
+          &:hover {
+            transform: scale(1.1);
+          }
+
+          &:active {
+            transform: scale(0.9);
+          }
+        }
+      }
+
+      .sideSearch {
+        width: 100%;
+        padding: 10px;
+
+        .sideInput {
+          box-sizing: border-box;
+          width: 100%;
+          height: 40px;
+          border: none;
+          outline: none;
+          background: #F6F6F5;
+          border-radius: 5px;
+          padding: 0 10px;
+          color: #A6A9A8;
+          font-size: 16px;
+          transition: all .2s;
+
+          &::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+            color: #A6A9A8;
+            font-size: 16px;
+          }
+          &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            color: #A6A9A8;
+            font-size: 16px;
+          }
+          &:-moz-placeholder { /* Mozilla Firefox 19+ */
+            color: #A6A9A8;
+            font-size: 16px;
+          }
+          &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+            color: #A6A9A8;
+            font-size: 16px;
+          }
+          &:-ms-input-placeholder { /* Microsoft Edge */
+            color: #A6A9A8;
+            font-size: 16px;
+          }
+
+          &:focus {
+            box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+          }
+        }
+      }
+
+      .sideBody {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: scroll;
+
+        &::-webkit-scrollbar {/*滚动条整体样式*/
+          width: 4px;     /*高宽分别对应横竖滚动条的尺寸*/
+          height: 0;
+        }
+        &::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+          border-radius: 5px;
+          background: #C96FD1;
+        }
+
+        .topList, .normalList {
+          .listContent {
+            width: 100%;
+            height: 2px;
+            background: #A6A9A8;
+            margin: 15px 0;
+            position: relative;
+
+            .listTitle {
+              position: absolute;
+              top: -8px;
+              left: 10px;
+              width: 100px;
+              border-left: 2px solid #A6A9A8;
+              border-right: 2px solid #A6A9A8;
+              margin: 0 auto;
+              color: #AEAEAE;
+              font-size: 12px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              gap: 5px;
+              background: #fff;
+              font-weight: bold;
+            }
+          }
+
+          .chatList {
+            .chatItemContent {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              width: 100%;
+              height: 60px;
+              background: #fff;
+              padding: 0 10px;
+              cursor: pointer;
+              transition: all .2s;
+              position: relative;
+              .chatDetail {
+                display: flex;
+                 gap: 5px;
+                align-items: center;
+                .chatDetailContent {
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: center;
+
+                  .chatPerson {
+                    font-size: 15px;
+                    font-weight: bold;
+                    color: #616162;
+                  }
+
+                  .chatMsg {
+                    font-size: 12px;
+                    color: #D6D6D6;
+                  }
+                }
+              }
+
+              .chatInfo {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                font-size: 12px;
+                gap: 5px;
+
+                .chatTime {
+                  color: #D6D6D6;
+                }
+
+                .msgNum {
+                  background: #fb3f49;
+                  height: 16px;
+                  min-width: 16px;
+                  padding: 2px;
+                  line-height: 12px;
+                  border-radius: 8px;
+                  text-align: center;
+                  color: #fff;
+                }
+              }
+
+              &::before {
+                position: absolute;
+                content: "";
+                top: 0;
+                left: 0;
+                width: 0;
+                height: 60px;
+                background: #C96FD1;
+                transition: all .2s;
+                border-radius: 2px;
+              }
+
+              &:hover {
+                background: #FBFAFB;
+                &::before {
+                  width: 3px;
+                }
+              }
+            }
+          }
+        }
+
+        .topList {
+
+        }
+        .normalList {
+
+        }
+      }
     }
 
     .content {
@@ -83,11 +340,77 @@
       .chatContent {
         height: 100%;
         background: #F2F3F8;
+        display: flex;
+        flex-direction: column-reverse;
+        overflow: scroll;
+
+        &::-webkit-scrollbar {/*滚动条整体样式*/
+          width: 4px;     /*高宽分别对应横竖滚动条的尺寸*/
+          height: 0;
+        }
+        &::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+          border-radius: 5px;
+          background: #C96FD1;
+        }
+
+        .messageItem {
+          width: 60%;
+          height: 80px;
+          display: flex;
+          gap: 10px;
+          padding: 0 10px;
+          margin: 10px 0;
+          .messageDetail {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            .messageInfo {
+              display: flex;
+              align-items: center;
+              gap: 5px;
+              font-size: 13px;
+
+              .messagePerson {
+                font-weight: bold;
+                color: #616162;
+              }
+
+              .messageTime {
+                color: #a7a7a7;
+              }
+            }
+
+            .messageContent {
+              padding: 5px 10px;
+              background: #fff;
+              border-radius: 0 20px 20px 20px;
+              color: #7A7C81;
+            }
+          }
+        }
+
+        .isMine {
+          margin-left: 40%;
+          flex-direction: row-reverse;
+
+          .messageDetail {
+            .messageInfo {
+              flex-direction: row-reverse;
+            }
+
+            .messageContent {
+              background: #C96FD1;
+              border-radius: 20px 0 20px 20px;
+              color: #fff;
+            }
+          }
+        }
       }
 
       .footer {
-        height: 80px;
-        padding: 0 20px 20px 20px;
+        height: 100px;
+        padding: 10px 20px 20px 20px;
 
         .sendContent {
           width: 100%;
