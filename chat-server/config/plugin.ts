@@ -6,6 +6,12 @@ const plugin: EggPlugin = {
   //   enable: true,
   //   package: 'egg-view-nunjucks',
   // },
+
+  // 跨域
+  cors: {
+    enable: true,
+    package: 'egg-cors',
+  }
 };
 
 export default plugin;
