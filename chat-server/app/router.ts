@@ -9,4 +9,7 @@ export default (app: Application) => {
   router.post('/login', controller.user.login);
   // 退出登录
   router.post('/logout', controller.user.logout);
+
+  // 搜索用户
+  router.post('/search/user', controller.search.user);
 };
