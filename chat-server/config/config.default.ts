@@ -8,7 +8,11 @@ export default (appInfo: EggAppInfo) => {
   config.keys = appInfo.name + '_1667632871375_9889';
 
   // 中间件
-  config.middleware = ['errorHandler'];
+  config.middleware = ['errorHandler', 'auth'];
+
+  config.auth = {
+    ignore: ['/register', '/login']
+  }
 
   // add your special config in here
   const bizConfig = {
@@ -24,7 +28,7 @@ export default (appInfo: EggAppInfo) => {
     // 跨域白名单
     domainWhiteList: [],
   };
-  //允许跨域的方法
+  // 允许跨域的方法
   config.cors = {
     origin: '*',
     allowMethods: 'GET, PUT, POST, DELETE, PATCH'
@@ -45,10 +49,10 @@ export default (appInfo: EggAppInfo) => {
       // 自动写入时间戳created_at updated_at
       timestamps: true,
       // 字段生成软删除时间戳
-      paranoid: true,
+      // paranoid: true,
       createdAt: 'created_at',
       updatedAt: 'updated_at',
-      deletedAt: 'deleted_at',
+      // deletedAt: 'deleted_at',
       // 所有驼峰命名格式化
       underscored: true
     }
@@ -58,6 +62,23 @@ export default (appInfo: EggAppInfo) => {
     locale: 'zh-cn',
     throwError: true,
   };
+  // 密码加密
+  config.crypto = {
+    secret: 'j120frjwh0hj*(@#jdwiah21'
+  }
+  // jwt鉴权
+  config.jwt = {
+    secret: 'j120frjwh0hj*(@#jdwiah21'
+  }
+  // redis存储
+  config.redis = {
+    client: {
+      port: 6379,
+      host: '127.0.0.1',
+      password: '',
+      db: 0,
+    }
+  }
 
   // the return config will combines to EggAppConfig
   return {

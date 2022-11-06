@@ -20,7 +20,17 @@ const plugin: EggPlugin = {
   // 参数验证
   valparams: {
     enable: true,
-    package: 'egg-valparams'
+    package: 'egg-valparams',
+  },
+  // jwt
+  jwt: {
+    enable: true,
+    package: 'egg-jwt',
+  },
+  // redis
+  redis: {
+    enable: true,
+    package: 'egg-redis',
   },
 };
 
