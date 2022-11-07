@@ -32,7 +32,6 @@ module.exports = ({}, app) => {
 
     // 将user信息挂载在全局ctx中
     ctx.authUser = user;
-    console.log('next', next)
     await next();
   }
 }
