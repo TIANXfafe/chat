@@ -13,7 +13,7 @@ const routeList: RouteObject[] = [
     element: <WrapperRouteComponent element={<LayoutPage />} titleId=""/>,
     children: [
       {
-        path: 'ashboard/workbeach',
+        path: 'dashboard/workbeach',
         element: <WrapperRouteComponent element={<Test />} titleId="" />
       }
     ]

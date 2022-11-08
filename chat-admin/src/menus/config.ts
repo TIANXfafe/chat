@@ -20,7 +20,7 @@ const MENU_CONFIG: MenuItem[] = [
 			{
 				itemKey: '1-1',
 				text: 'app.menu.dashboard.workbeach',
-				path: '/dashboard/test'
+				path: '/dashboard/workbeach'
 			},
 		]
 	},
