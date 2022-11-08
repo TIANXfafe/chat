@@ -2,7 +2,7 @@
 
 module.exports = (app) => {
   const { INTEGER, STRING, DATE } = app.Sequelize;
-  return app.model.define('friend', {
+  const Friend = app.model.define('friend', {
     id: {
       type: INTEGER(20).UNSIGNED,
       primaryKey: true,
@@ -65,4 +65,20 @@ module.exports = (app) => {
     created_at: DATE,
     updated_at: DATE
   });
+
+  // 定义关联关系
+  Friend.associate = function() {
+    // 反向一对多
+    Friend.belongsTo(app.model.User, {
+      as: 'friendInfo',
+      foreignKey: 'friend_id'
+    });
+    // 多对多（标签）
+    Friend.belongsToMany(app.model.Tag, {
+      through: 'friend_tag',
+      foreignKey: 'friend_id'
+    })
+  }
+
+  return Friend;
 };
