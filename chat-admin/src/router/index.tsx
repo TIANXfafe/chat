@@ -2,7 +2,7 @@ import React, {FC, lazy} from 'react';
 import {RouteObject} from 'react-router';
 import {useRoutes} from 'react-router-dom';
 import { WrapperRouteComponent } from './config';
-import LayoutPage from '../pages/Layout';
+import LayoutPage from '@src/pages/Layout';
 
 const Test = lazy(() => import('../pages/test'));
 

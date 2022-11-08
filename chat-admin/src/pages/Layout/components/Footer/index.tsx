@@ -22,7 +22,7 @@ const Index = () => {
           }}
       >
 				<IconSemiLogo size="large" style={{ marginRight: '8px' }} />
-				<span>Copyright ©2021 xieyezi. All Rights Reserved. </span>
+				<span>Copyright ©2021 tianxu. All Rights Reserved. </span>
 			</span>
         <span>
 				<span style={{ marginRight: '24px' }}>Github地址</span>
