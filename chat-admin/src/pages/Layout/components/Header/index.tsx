@@ -1,5 +1,6 @@
 import React from 'react';
 import {Layout, Nav} from '@douyinfe/semi-ui';
+import HeaderRight from "../HeaderRight";
 
 const {Header} = Layout;
 
@@ -9,7 +10,7 @@ const Index = () => {
       <Nav
         mode="horizontal"
         header={<div>123</div>}
-        footer={<div>456</div>}
+        footer={<HeaderRight />}
       />
     </Header>
   );
