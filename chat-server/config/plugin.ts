@@ -32,6 +32,11 @@ const plugin: EggPlugin = {
     enable: true,
     package: 'egg-redis',
   },
+  // websocket
+  websocket: {
+    enable: true,
+    package: 'egg-websocket-plugin'
+  },
 };
 
 export default plugin;

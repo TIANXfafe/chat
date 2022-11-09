@@ -19,6 +19,7 @@ import 'egg-sequelize';
 import 'egg-valparams';
 import 'egg-jwt';
 import 'egg-redis';
+import 'egg-websocket-plugin';
 import { EggPluginItem } from 'egg';
 declare module 'egg' {
   interface EggPlugin {
@@ -39,5 +40,6 @@ declare module 'egg' {
     valparams?: EggPluginItem;
     jwt?: EggPluginItem;
     redis?: EggPluginItem;
+    websocket?: EggPluginItem;
   }
 }

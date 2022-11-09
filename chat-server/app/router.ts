@@ -35,4 +35,57 @@ export default (app: Application) => {
 
   // 举报
   router.post('/report/save', controller.report.save);
+
+  app.ws.use(async (ctx, next) => {
+    // 验证用户token
+    let user = {};
+    const token = ctx.query.token;
+    try{
+      user = ctx.checkToken(token);
+      // 验证用户状态
+      const userCheck = await app.model.User.findByPk((user as any).id);
+      if (!userCheck) {
+        ctx.websocket.send(JSON.stringify({
+          msg: 'fail',
+          data: '用户不存在!'
+        }));
+        return ctx.websocket.close();
+      }
+      if (!userCheck.status) {
+        ctx.websocket.send(JSON.stringify({
+          msg: 'fail',
+          data: '您已被禁用!'
+        }));
+        return ctx.websocket.close();
+      }
+      // 用户上线
+      (app.ws as any).user = (app.ws as any).user ? (app.ws as any).user : {};
+      // 下线其他设备
+      if ((app.ws as any).user[(user as any).id]) {
+        (app.ws as any).user[(user as any).id].send(JSON.stringify({
+          msg: 'fail',
+          data: '您的账号在其他设备登录!'
+        }));
+        (app.ws as any).user[(user as any).id].close();
+      }
+      // 记录当前用户id
+      ctx.websocket.user_id = (user as any).id;
+      (app.ws as any).user[(user as any).id] = ctx.websocket;
+      await next();
+    } catch (err) {
+      console.log(err);
+      const fail = (err as any).name === 'TokenExpiredError'
+        ? 'token已过期！请重新获取令牌！'
+        : 'token令牌不合法';
+      ctx.websocket.send(JSON.stringify({
+        msg: 'fail',
+        data: fail
+      }))
+      // 关闭连接
+      ctx.websocket.close();
+    }
+  })
+
+  //websocket
+  app.ws.route('/ws' ,controller.chat.connect);
 };
