@@ -18,13 +18,17 @@ interface InputProps {
    * 错误信息
    */
   error?: string;
+  name?: string;
+  onChange?: (e: any) => void;
 }
 
 const Index = ({
   defaultValue="",
   type="text",
   label="",
-  error=""
+  error="",
+  name="",
+  onChange
 }: InputProps) => {
   const [beforeStyle, setBeforeStyle] = useState({});
 
@@ -64,6 +68,8 @@ const Index = ({
         ref={inputRef}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        name={name}
+        onChange={onChange ? (e) => onChange(e) : undefined}
       />
       {error && <span className={styles.after}>{error}</span>}
     </div>

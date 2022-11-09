@@ -5,8 +5,11 @@ import RegisterForm from "../../components/RegisterForm";
 import {HandLeft, HandRight} from '@icon-park/react';
 
 const Index = () => {
+  // 遮罩层样式
   const [maskStyle, setMaskStyle] = useState({});
+  // 登录表单样式
   const [leftStyle, setLeftStyle] = useState({});
+  // 注册表单样式
   const [rightStyle, setRightStyle] = useState({});
 
   /**
