@@ -8,11 +8,11 @@ export default (appInfo: EggAppInfo) => {
   config.keys = appInfo.name + '_1667632871375_9889';
 
   // 中间件
-  config.middleware = ['errorHandler', 'auth'];
+  config.middleware = [ 'errorHandler', 'auth' ];
 
   config.auth = {
-    ignore: ['/register', '/login']
-  }
+    ignore: [ '/register', '/login' ],
+  };
 
   // add your special config in here
   const bizConfig = {
@@ -23,15 +23,15 @@ export default (appInfo: EggAppInfo) => {
   config.security = {
     // 关闭csrf
     csrf: {
-      enable: false
+      enable: false,
     },
     // 跨域白名单
-    domainWhiteList: ['http://localhost:3000'],
+    domainWhiteList: [ 'http://localhost:3000' ],
   };
   // 允许跨域的方法
   config.cors = {
     origin: '*',
-    allowMethods: 'GET, PUT, POST, DELETE, PATCH'
+    allowMethods: 'GET, PUT, POST, DELETE, PATCH',
   };
   // 数据库
   config.sequelize = {
@@ -54,8 +54,8 @@ export default (appInfo: EggAppInfo) => {
       updatedAt: 'updated_at',
       // deletedAt: 'deleted_at',
       // 所有驼峰命名格式化
-      underscored: true
-    }
+      underscored: true,
+    },
   };
   // 参数验证
   config.valparams = {
@@ -64,12 +64,12 @@ export default (appInfo: EggAppInfo) => {
   };
   // 密码加密
   config.crypto = {
-    secret: 'j120frjwh0hj*(@#jdwiah21'
-  }
+    secret: 'j120frjwh0hj*(@#jdwiah21',
+  };
   // jwt鉴权
   config.jwt = {
-    secret: 'j120frjwh0hj*(@#jdwiah21'
-  }
+    secret: 'j120frjwh0hj*(@#jdwiah21',
+  };
   // redis存储
   config.redis = {
     client: {
@@ -77,8 +77,8 @@ export default (appInfo: EggAppInfo) => {
       host: '127.0.0.1',
       password: '',
       db: 0,
-    }
-  }
+    },
+  };
 
   // the return config will combines to EggAppConfig
   return {

@@ -35,7 +35,7 @@ const plugin: EggPlugin = {
   // websocket
   websocket: {
     enable: true,
-    package: 'egg-websocket-plugin'
+    package: 'egg-websocket-plugin',
   },
 };
 
