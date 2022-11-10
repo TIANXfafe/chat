@@ -1,6 +1,19 @@
-import service from "./index";
+import request from "./index";
 
 // 注册
-export const register = (data: any) => service.post('/register', data);
+export const register = (data: any) => request({
+  url: '/register',
+  method: 'post',
+  body: data
+})
 // 登录
-export const login = (data: any) => service.post('/login', data);
+export const login = (data: any) => request({
+  url: '/login',
+  method: 'post',
+  body: data
+})
+// 退出登录
+export const logout = () => request({
+  url: '/logout',
+  method: 'post'
+})
