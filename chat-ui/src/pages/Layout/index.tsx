@@ -22,9 +22,25 @@ import Avatar from "../../components/Avatar";
 
 import face1 from '../../assets/images/face-male-1.jpg';
 import face2 from '../../assets/images/face-male-2.jpg';
+import toast from "react-hot-toast";
+import {logout} from "../../request/api";
+import {clearLocalStorage} from "../../utils/storage";
+import {useNavigate} from "react-router-dom";
 
 const Index = () => {
+  const navigator = useNavigate();
   const [msgInput, setMsgInput] = useState<string>("");
+
+  const handleLogout = async () => {
+    try {
+      const res = await logout();
+      toast.success('退出成功!');
+      clearLocalStorage();
+      navigator('/login');
+    } catch (err) {
+      toast.error((err as string));
+    }
+  }
 
   /**
    * input输入框更改事件
@@ -42,7 +58,7 @@ const Index = () => {
       if (msgInput.trim()) {
         console.log('发送消息')
       } else {
-        console.log('输入内容不能为空')
+        toast.error('输入内容不能为空');
       }
     }
   }
@@ -97,6 +113,7 @@ const Index = () => {
             fill="#3E4C5F"
             strokeLinejoin="bevel"
             strokeLinecap="square"
+            onClick={handleLogout}
           />
         </section>
       </nav>
