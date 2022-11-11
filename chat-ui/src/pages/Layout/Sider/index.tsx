@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {AddressBook, Communication, Config, FolderQuality, Power} from "@icon-park/react";
 import Avatar from "../../../components/Avatar";
 import styles from './index.module.less';
@@ -6,7 +6,41 @@ import face1 from "../../../assets/images/face-male-1.jpg";
 import {logout} from "../../../request/api";
 import toast from "react-hot-toast";
 import {clearLocalStorage} from "../../../utils/storage";
-import {useNavigate} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
+import router from '../../../router';
+
+const Menu = () => {
+  const [routes, setRoutes] = useState<any>([]);
+
+  useEffect(() => {
+    const navRouter = router.routes[0].children;
+    setRoutes(navRouter);
+    console.log('rrr', navRouter)
+  })
+
+  return (
+    <>
+      {routes.length ? routes.map((item: any) => {
+        return (
+          <NavLink
+            key={item.id}
+            to={item.path}
+            className={(isActive) => isActive ? styles.activeMenu : styles.menuItem}
+          >
+            <Communication
+              theme="outline"
+              size="25"
+              fill="#fff"
+              strokeWidth={3}
+              strokeLinejoin="bevel"
+              strokeLinecap="square"
+            />
+          </NavLink>
+        )
+      }) : null}
+    </>
+  )
+}
 
 const Index = () => {
   const navigator = useNavigate();
@@ -29,7 +63,11 @@ const Index = () => {
     <nav className={styles.sidebar}>
       <Avatar src={face1} />
       <section className={styles.menuContent}>
-        <div className={styles.menuItem}>
+        {/*<Menu />*/}
+        <NavLink
+          to={"/"}
+          className={(isActive) => isActive ? styles.activeMenu : styles.menuItem}
+        >
           <Communication
             theme="outline"
             size="25"
@@ -38,19 +76,12 @@ const Index = () => {
             strokeLinejoin="bevel"
             strokeLinecap="square"
           />
-        </div>
-        <div className={styles.menuItem}>
+        </NavLink>
+        <NavLink
+          to="/mailList"
+          className={(isActive) => isActive ? styles.activeMenu : styles.menuItem}
+        >
           <AddressBook
-            theme="outline"
-            size="25"
-            fill="#fff"
-            strokeWidth={3}
-            strokeLinejoin="bevel"
-            strokeLinecap="square"
-          />
-        </div>
-        <div className={styles.menuItem}>
-          <FolderQuality
             theme="outline"
             size="25"
             fill="#3E4C5F"
@@ -58,7 +89,20 @@ const Index = () => {
             strokeLinejoin="bevel"
             strokeLinecap="square"
           />
-        </div>
+        </NavLink>
+          <NavLink
+          to={"/fileList"}
+          className={(isActive) => isActive ? styles.activeMenu : styles.menuItem}
+          >
+          <FolderQuality
+          theme="outline"
+          size="25"
+          fill="#3E4C5F"
+          strokeWidth={3}
+          strokeLinejoin="bevel"
+          strokeLinecap="square"
+          />
+          </NavLink>
       </section>
       <section className={styles.menuAction}>
         <Config

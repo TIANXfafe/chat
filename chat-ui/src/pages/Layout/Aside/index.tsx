@@ -1,10 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './index.module.less';
 import {AddOne, PeopleSpeak, Pin} from "@icon-park/react";
 import Avatar from "../../../components/Avatar";
 import face2 from "../../../assets/images/face-male-2.jpg";
 
 const Index = () => {
+  const navigator = useNavigate();
+  const jumpToChat = () => {
+    navigator("/chatContent/1")
+  }
+
   return (
     <aside className={styles.subSidebar}>
       <section className={styles.sideHeader}>
@@ -32,7 +38,7 @@ const Index = () => {
             </div>
           </div>
           <div className={styles.chatList}>
-            <div className={styles.chatItemContent}>
+            <div className={styles.chatItemContent} onClick={jumpToChat}>
               <div className={styles.chatDetail}>
                 <Avatar src={face2} size="38px" />
                 <div className={styles.chatDetailContent}>
@@ -45,7 +51,7 @@ const Index = () => {
                 <div className={styles.msgNum}>5</div>
               </div>
             </div>
-            <div className={styles.chatItemContent}>
+            <div className={styles.chatItemContent} onClick={jumpToChat}>
               <div className={styles.chatDetail}>
                 <Avatar src={face2} size="38px" />
                 <div className={styles.chatDetailContent}>

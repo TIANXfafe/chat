@@ -18,6 +18,7 @@
     gap: 20px;
     width: 80px;
     padding-top: 20px;
+
     .menuItem {
       width: 80px;
       height: 40px;
@@ -26,6 +27,7 @@
       justify-content: center;
       padding: 7.5px 0;
       position: relative;
+      transition: all .5s;
 
       &::before {
         position: absolute;
@@ -43,6 +45,20 @@
         &::before {
           width: 3px;
         }
+      }
+    }
+
+    .activeMenu {
+      &::before {
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 0;
+        width: 3px;
+        height: 40px;
+        background: #C96FD1;
+        transition: all .2s;
+        border-radius: 2px;
       }
     }
   }
