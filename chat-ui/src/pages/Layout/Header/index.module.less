@@ -1,0 +1,39 @@
+.header {
+  width: 100%;
+  height: 70px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+
+  .infoContent {
+    display: flex;
+    align-content: center;
+    gap: 10px;
+
+    .name {
+      height: 40px;
+      line-height: 40px;
+      font-weight: bold;
+    }
+  }
+
+  .actionContent {
+    height: 40px;
+    border-radius: 20px;
+    display: flex;
+    align-content: center;
+    justify-content: space-around;
+    background: #F7F6FB;
+    padding: 7.5px 15px;
+    gap: 25px;
+
+    span {
+      transition: all .2s;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+.sidebar {
+  width: 80px;
+  height: 100%;
+  background: #0C1D32;
+  border-radius: 0 10px 10px 0;
+  padding: 50px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+
+  .menuContent {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    width: 80px;
+    padding-top: 20px;
+    .menuItem {
+      width: 80px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7.5px 0;
+      position: relative;
+
+      &::before {
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 40px;
+        background: #C96FD1;
+        transition: all .2s;
+        border-radius: 2px;
+      }
+
+      &:hover {
+        &::before {
+          width: 3px;
+        }
+      }
+    }
+  }
+
+  .menuAction {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+
+    & > * {
+      cursor: pointer;
+    }
+  }
+}
