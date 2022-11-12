@@ -1,9 +1,8 @@
 .mailList {
   width: 100%;
   height: 100%;
-  background: skyblue;
+  background: #fff;
   border-radius: 20px;
-  padding: 20px;
   display: flex;
   flex-direction: column;
 
@@ -18,6 +17,7 @@
     overflow: scroll;
     display: flex;
     gap: 10px;
+    padding: 5px 10px;
 
     &::-webkit-scrollbar {/*滚动条整体样式*/
       width: 4px;     /*高宽分别对应横竖滚动条的尺寸*/
@@ -31,22 +31,63 @@
     .mailItem {
       width: 140px;
       height: 180px;
-      background: #ff8a3d;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 20px;
       border-radius: 10px;
       overflow: hidden;
+      border: 1px solid #ECECEC;
+      transition: all .3s;
+      cursor: pointer;
 
-      .mailName {
-        width: 124px;
-        font-weight: bold;
-        font-size: 14px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+      &:hover {
+        box-shadow: 0 0 5px #d8d8d8;
+      }
+
+      .mailInfo {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+
+        .mailAvatar {
+          transition: all .3s;
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
+
+        .mailName {
+          width: 124px;
+          font-weight: bold;
+          font-size: 14px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+      .mailAction {
+        width: 100%;
+        height: 40px;
+        //background: red;
+        border-top: 1px solid #ECECEC;
+        display: flex;
+        transition: all .3s;
+
+        & > * {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid #ECECEC;
+          background: #fff;
+        }
+        & > *:hover {
+          transform: scale(1.1);
+        }
       }
     }
   }
