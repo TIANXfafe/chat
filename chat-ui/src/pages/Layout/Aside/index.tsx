@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './index.module.less';
 import {AddOne, PeopleSpeak, Pin} from "@icon-park/react";
@@ -6,8 +6,12 @@ import Avatar from "../../../components/Avatar";
 import face2 from "../../../assets/images/face-male-2.jpg";
 import {animated} from "react-spring";
 import useStaggeredList from "../../../hooks/usStaggeredList";
+import { Modal } from '@douyinfe/semi-ui';
+import sunny from '../../../assets/images/weather/sunny.png';
 
 const Index = () => {
+  const [visible, setVisible] = useState<boolean>(false);
+
   const navigator = useNavigate();
   const jumpToChat = () => {
     navigator("/chatContent/1")
@@ -17,11 +21,13 @@ const Index = () => {
 
   const normalTrailAnimate = useStaggeredList(15)
 
+
   return (
     <aside className={styles.subSidebar}>
+
       <section className={styles.sideHeader}>
         <h2 className={styles.sideTitle}>Message</h2>
-        <button className={styles.sideBtn}>
+        <button className={styles.sideBtn} onClick={() => setVisible(true)}>
           <AddOne
             theme="outline"
             size="25"
@@ -31,6 +37,9 @@ const Index = () => {
             strokeLinecap="square"
           />
         </button>
+      </section>
+      <section className={styles.weather}>
+        <img src={sunny} alt="天气"/>
       </section>
       <section className={styles.sideSearch}>
         <input type="text" className={styles.sideInput} placeholder="Search..."/>
@@ -312,6 +321,18 @@ const Index = () => {
           </div>
         </section>
       </section>
+      <Modal
+        title="添加好友"
+        visible={visible}
+        // onOk={handleOk}
+        // afterClose={handleAfterClose} //>=1.16.0
+        // onCancel={handleCancel}
+        // closeOnEsc={true}
+      >
+        This is the content of a basic modal.
+        <br />
+        More content...
+      </Modal>
     </aside>
   );
 };
