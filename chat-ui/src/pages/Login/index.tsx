@@ -3,6 +3,7 @@ import styles from './index.module.less';
 import LoginForm from "../../components/LoginForm";
 import RegisterForm from "../../components/RegisterForm";
 import {HandLeft, HandRight} from '@icon-park/react';
+import maskImg from '../../assets/images/19.png';
 
 const Index = () => {
   // 遮罩层样式
@@ -32,7 +33,9 @@ const Index = () => {
   return (
     <div className={styles.container}>
       <div className={styles.mainContent}>
-        <div className={styles.mask} style={maskStyle} />
+        <div className={styles.mask} style={maskStyle}>
+          <img src={maskImg} alt="" className={styles.maskImg}/>
+        </div>
         <div className={styles.leftContent} style={leftStyle}>
           <h1>登录</h1>
           <LoginForm />
