@@ -1,7 +1,7 @@
 'use strict';
 import crypto from 'crypto';
 
-module.exports = (app) => {
+module.exports = app => {
   const { INTEGER, STRING, DATE, ENUM } = app.Sequelize;
   return app.model.define('user', {
     id: {
@@ -32,14 +32,15 @@ module.exports = (app) => {
       allowNull: false,
       defaultValue: '',
       comment: '密码',
-      set: function (val) {
+      set(val) {
         const hmac = crypto
           .createHmac('sha256', app.config.crypto.secret)
           .update(val)
           .digest('hex');
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        this.setDataValue('password', hmac)
-      }
+        this.setDataValue('password', hmac);
+      },
     },
     avatar: {
       type: STRING(200),
@@ -50,11 +51,11 @@ module.exports = (app) => {
     phone: {
       type: STRING(20),
       comment: '用户手机',
-      unique: true
+      unique: true,
     },
     sex: {
       type: ENUM,
-      values: ['男', '女', '未知'],
+      values: [ '男', '女', '未知' ],
       allowNull: true,
       defaultValue: '未知',
       comment: '用户性别',
@@ -63,19 +64,19 @@ module.exports = (app) => {
       type: INTEGER(1),
       allowNull: false,
       defaultValue: 1,
-      comment: '账号状态 0 禁用 1 正常'
+      comment: '账号状态 0 禁用 1 正常',
     },
     sign: {
       type: STRING(200),
       allowNull: false,
       defaultValue: '',
-      comment: '个性签名'
+      comment: '个性签名',
     },
     area: {
       type: STRING(200),
       allowNull: true,
       defaultValue: '',
-      comment: '地区'
+      comment: '地区',
     },
     created_at: DATE,
     updated_at: DATE,

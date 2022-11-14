@@ -40,21 +40,21 @@ export default (app: Application) => {
     // 验证用户token
     let user = {};
     const token = ctx.query.token;
-    try{
+    try {
       user = ctx.checkToken(token);
       // 验证用户状态
       const userCheck = await app.model.User.findByPk((user as any).id);
       if (!userCheck) {
         ctx.websocket.send(JSON.stringify({
           msg: 'fail',
-          data: '用户不存在!'
+          data: '用户不存在!',
         }));
         return ctx.websocket.close();
       }
       if (!userCheck.status) {
         ctx.websocket.send(JSON.stringify({
           msg: 'fail',
-          data: '您已被禁用!'
+          data: '您已被禁用!',
         }));
         return ctx.websocket.close();
       }
@@ -64,7 +64,7 @@ export default (app: Application) => {
       if ((app.ws as any).user[(user as any).id]) {
         (app.ws as any).user[(user as any).id].send(JSON.stringify({
           msg: 'fail',
-          data: '您的账号在其他设备登录!'
+          data: '您的账号在其他设备登录!',
         }));
         (app.ws as any).user[(user as any).id].close();
       }
@@ -79,13 +79,13 @@ export default (app: Application) => {
         : 'token令牌不合法';
       ctx.websocket.send(JSON.stringify({
         msg: 'fail',
-        data: fail
-      }))
+        data: fail,
+      }));
       // 关闭连接
       ctx.websocket.close();
     }
-  })
+  });
 
-  //websocket
-  app.ws.route('/ws' ,controller.chat.connect);
+  // websocket
+  app.ws.route('/ws', controller.chat.connect);
 };

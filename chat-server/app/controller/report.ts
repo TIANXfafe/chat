@@ -9,7 +9,7 @@ export default class HomeController extends Controller {
       reported_id,
       reported_type,
       content,
-      category
+      category,
     } = ctx.request.body;
     // 参数验证
 
@@ -21,9 +21,9 @@ export default class HomeController extends Controller {
     const user = await app.model.User.findOne({
       where: {
         id: reported_id,
-        status: 1
-      }
-    })
+        status: 1,
+      },
+    });
     if (!user) {
       ctx.throw(400, '被举报人不存在!');
     }
@@ -32,11 +32,11 @@ export default class HomeController extends Controller {
       where: {
         reported_id,
         reported_type,
-        status: 'pending'
-      }
-    })
+        status: 'pending',
+      },
+    });
     if (reportInfo) {
-      ctx.throw(400, '请勿反复提交!')
+      ctx.throw(400, '请勿反复提交!');
     }
     // 举报内容
     const result = await app.model.Report.create({
@@ -44,8 +44,8 @@ export default class HomeController extends Controller {
       reported_id,
       reported_type,
       content,
-      category
-    })
+      category,
+    });
     ctx.apiSuccess(result);
   }
 }

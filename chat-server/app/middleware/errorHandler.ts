@@ -5,7 +5,7 @@ module.exports = () => {
       if (ctx.status === 404 && !ctx.body) {
         ctx.body = {
           msg: 'fail',
-          data: '404 错误'
+          data: '404 错误',
         };
       }
     } catch (err: any) {
@@ -16,20 +16,20 @@ module.exports = () => {
       // const error = status === 500 && app.config.env === 'prod'
       //   ? 'InterNal Server Error'
       //   : err.message
-      const error = err.message
+      const error = err.message;
       // 从error对象上读出各个属性，设置到响应中
       ctx.body = {
         msg: 'fail',
-        data: error
-      }
+        data: error,
+      };
 
       if (status === 422) {
         ctx.body = {
           msg: 'fail',
           data: err.errors,
-        }
+        };
       }
-      ctx.status = status
+      ctx.status = status;
     }
   };
 };

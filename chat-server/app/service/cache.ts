@@ -8,12 +8,12 @@ export default class CacheService extends Service {
    * @return {array} 返回数组
    */
   public async getList(key: string, isChildObject = false) {
-    const {redis} = this.app;
+    const { redis } = this.app;
     const data = await redis.lrange(key, 0, -1);
     if (isChildObject) {
       data.map(item => {
         return JSON.parse(item);
-      })
+      });
     }
     return data;
   }
@@ -30,9 +30,9 @@ export default class CacheService extends Service {
     key: string,
     value: object | string,
     type: 'push' | 'unshift' = 'push',
-    expir: number = 0
+    expir = 0,
   ) {
-    const {redis} = this.app;
+    const { redis } = this.app;
     if (expir > 0) {
       await redis.expire(key, expir);
     }
@@ -52,13 +52,13 @@ export default class CacheService extends Service {
    * @param expir 过期时间 单位秒
    * @return {String} 返回成功字符串OK
    */
-  async set(key: string, value: string ,expir = 0) {
-    const {redis} = this.app;
+  async set(key: string, value: string, expir = 0) {
+    const { redis } = this.app;
     if (expir === 0) {
       return await redis.set(key, JSON.stringify(value));
-    } else {
-      return await redis.set(key, JSON.stringify(value), 'EX', expir);
     }
+    return await redis.set(key, JSON.stringify(value), 'EX', expir);
+
   }
 
   /**
@@ -67,7 +67,7 @@ export default class CacheService extends Service {
    * @return {String | Array | Object} 返回获取的数据
    */
   async get(key: string) {
-    const {redis} = this.app;
+    const { redis } = this.app;
     const result = await redis.get(key);
     return result && JSON.parse(result);
   }
@@ -82,9 +82,9 @@ export default class CacheService extends Service {
     const { redis } = this.app;
     if (number === 1) {
       return await redis.incr(key);
-    } else {
-      return await redis.incrby(key, number);
     }
+    return await redis.incrby(key, number);
+
   }
 
   /**

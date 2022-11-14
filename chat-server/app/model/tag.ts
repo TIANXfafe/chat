@@ -1,19 +1,19 @@
 'use strict';
 
-module.exports = (app) => {
+module.exports = app => {
   const { INTEGER, STRING, DATE } = app.Sequelize;
   return app.model.define('tag', {
     id: {
       type: INTEGER(20).UNSIGNED,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     name: {
       type: STRING(30),
       allowNull: false,
       defaultValue: '',
       comment: '标签名称',
-      unique: true
+      unique: true,
     },
     user_id: {
       type: INTEGER(20).UNSIGNED,
@@ -22,12 +22,12 @@ module.exports = (app) => {
       //  定义外键（重要）
       references: {
         model: 'user', // 对应表名称（数据表名称）
-        key: 'id' // 对应表的主键
+        key: 'id', // 对应表的主键
       },
       onUpdate: 'restrict', // 更新时操作
-      onDelete: 'cascade'  // 删除时操作
+      onDelete: 'cascade', // 删除时操作
     },
     created_at: DATE,
-    updated_at: DATE
+    updated_at: DATE,
   });
 };

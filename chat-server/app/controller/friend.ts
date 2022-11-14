@@ -9,13 +9,13 @@ export default class FriendController extends Controller {
     console.log('cc', currentUserId);
     const friends = await app.model.Friend.findAndCountAll({
       where: {
-        user_id: currentUserId
+        user_id: currentUserId,
       },
       include: [{
         model: app.model.User,
         as: 'friendInfo',
-        attributes: ['id', 'username', 'nickname', 'avatar']
-      }]
+        attributes: [ 'id', 'username', 'nickname', 'avatar' ],
+      }],
     });
 
     const res = friends.rows.map(item => {
@@ -26,9 +26,9 @@ export default class FriendController extends Controller {
           ? item.friendInfo.nickname
           : item.friendInfo.username,
         nickname: item.friendInfo.nickname,
-        avatar: item.friendInfo.avatar
-      }
-    })
+        avatar: item.friendInfo.avatar,
+      };
+    });
 
     // 排序
     friends.rows = new SortWord(res, 'name');
@@ -43,21 +43,21 @@ export default class FriendController extends Controller {
     const friend = await app.model.Friend.findOne({
       where: {
         friend_id: id,
-        user_id: currentUserId
+        user_id: currentUserId,
       },
       include: [{
         model: app.model.User,
         as: 'friendInfo',
         attributes: {
-          exclude: ['password']
-        }
-      }]
+          exclude: [ 'password' ],
+        },
+      }],
     });
 
     if (!friend) {
       ctx.throw(400, '用户不存在');
     }
-    ctx.apiSuccess(friend)
+    ctx.apiSuccess(friend);
   }
 
   // 移入/移出黑名单
@@ -69,8 +69,8 @@ export default class FriendController extends Controller {
     const friend = await app.model.Friend.findOne({
       where: {
         friend_id: id,
-        user_id: currentUserId
-      }
+        user_id: currentUserId,
+      },
     });
     if (!friend) {
       ctx.throw(400, '用户不存在');
@@ -90,8 +90,8 @@ export default class FriendController extends Controller {
       where: {
         friend_id: id,
         user_id: currentUserId,
-        isblack: 0
-      }
+        isblack: 0,
+      },
     });
     if (!friend) {
       ctx.throw(400, '用户不存在');
@@ -106,13 +106,13 @@ export default class FriendController extends Controller {
     const { ctx, app } = this;
     const currentUserId = ctx.authUser.id;
     const id = ctx.params.id ? parseInt(ctx.params.id) : 0;
-    const {lookme, lookhim} = ctx.request.body;
+    const { lookme, lookhim } = ctx.request.body;
     const friend = await app.model.Friend.findOne({
       where: {
         friend_id: id,
         user_id: currentUserId,
-        isblack: 0
-      }
+        isblack: 0,
+      },
     });
     if (!friend) {
       ctx.throw(400, '用户不存在');
@@ -135,11 +135,11 @@ export default class FriendController extends Controller {
       where: {
         user_id: current_user_id,
         friend_id: id,
-        isblack: 0
+        isblack: 0,
       },
       include: [{
-        model: app.model.Tag
-      }]
+        model: app.model.Tag,
+      }],
     });
     if (!friend) {
       ctx.throw(400, '该记录不存在');
@@ -152,8 +152,8 @@ export default class FriendController extends Controller {
     // 获取当前用户所有标签
     const allTags = await app.model.Tag.findAll({
       where: {
-        user_id: current_user_id
-      }
+        user_id: current_user_id,
+      },
     });
 
     const allTagsName = allTags.map(item => item.name);
@@ -166,33 +166,33 @@ export default class FriendController extends Controller {
     addTags = addTags.map(name => {
       return {
         name,
-        user_id: current_user_id
-      }
+        user_id: current_user_id,
+      };
     });
     // 写入tag表
     const resAddTags = await app.model.Tag.bulkCreate(addTags);
-    console.log('resAddTags', resAddTags)
+    console.log('resAddTags', resAddTags);
 
     // 找到新标签的id
     newTags = await app.model.Tag.findAll({
       where: {
         user_id: current_user_id,
-        name: newTags
-      }
+        name: newTags,
+      },
     });
 
-    let oldTagsIds = friend.tags.map(item => item.id);
-    let newTagsIds = newTags.map(item => item.id);
+    const oldTagsIds = friend.tags.map(item => item.id);
+    const newTagsIds = newTags.map(item => item.id);
 
     let addTagsIds = newTagsIds.filter(id => !oldTagsIds.includes(id));
-    let delTagsIds = oldTagsIds.filter(id => !newTagsIds.includes(id));
+    const delTagsIds = oldTagsIds.filter(id => !newTagsIds.includes(id));
 
     // 添加关联关系
     addTagsIds = addTagsIds.map(tag_id => {
       return {
         tag_id,
-        friend_id: friend.id
-      }
+        friend_id: friend.id,
+      };
     });
 
     app.model.FriendTag.bulkCreate(addTagsIds);
@@ -201,8 +201,8 @@ export default class FriendController extends Controller {
     app.model.FriendTag.destroy({
       where: {
         tag_id: delTagsIds,
-        friend_id: friend.id
-      }
+        friend_id: friend.id,
+      },
     });
 
     ctx.apiSuccess('ok');

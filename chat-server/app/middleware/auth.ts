@@ -1,7 +1,7 @@
-module.exports = ({}, app) => {
+module.exports = (_, app) => {
   return async (ctx, next) => {
     // 获取header头token
-    const {token = ''} = ctx.header;
+    const { token = '' } = ctx.header;
     if (!token) {
       return ctx.apiFail('您没有权限访问该接口!');
     }
@@ -12,7 +12,7 @@ module.exports = ({}, app) => {
       // token验证
       user = ctx.checkToken(token);
     } catch (error: any) {
-      let fail = error.name === 'TokenExpiredError'
+      const fail = error.name === 'TokenExpiredError'
         ? 'token已过期!请重新获取令牌'
         : 'token令牌不合法!';
       ctx.throw(400, fail);
@@ -33,5 +33,5 @@ module.exports = ({}, app) => {
     // 将user信息挂载在全局ctx中
     ctx.authUser = user;
     await next();
-  }
-}
+  };
+};

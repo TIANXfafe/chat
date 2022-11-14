@@ -16,5 +16,5 @@ module.exports = {
   // 验证token
   checkToken(token) {
     return this.app.jwt.verify(token, this.app.config.jwt.secret);
-  }
-}
+  },
+};
