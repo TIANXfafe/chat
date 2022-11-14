@@ -55,9 +55,9 @@ module.exports = app => {
     },
     sex: {
       type: ENUM,
-      values: [ '男', '女', '未知' ],
+      values: [ '男', '女', '保密' ],
       allowNull: true,
-      defaultValue: '未知',
+      defaultValue: '保密',
       comment: '用户性别',
     },
     status: {

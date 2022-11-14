@@ -1,15 +1,13 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {RouterProvider} from "react-router-dom";
-import toast, { Toaster } from 'react-hot-toast';
-import checkLogin from './utils/checkLogin';
-import {clearLocalStorage} from "./utils/storage";
-import router from './router';
+import App from './App';
 import './index.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+root.render(<App />);
 
 // const Index = (props: any) => {
 //   const navigator = useNavigate();
@@ -26,10 +24,3 @@ const root = ReactDOM.createRoot(
 //   return (
 //   );
 // };
-
-root.render(
-  <>
-    <RouterProvider router={router} />
-    <Toaster />
-  </>
-);

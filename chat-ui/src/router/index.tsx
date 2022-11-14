@@ -7,8 +7,8 @@ import MailList from "../pages/MailList";
 import FileList from '../pages/FileList';
 import Empty from '../pages/Empty';
 import ChatContent from '../pages/ChatContent';
-import {Communication} from "@icon-park/react";
 import React from "react";
+import Personal from "../pages/Personal";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: '/fileList',
         element: <FileList />
+      },
+      {
+        path: '/personal',
+        element: <Personal />
       }
     ]
   },

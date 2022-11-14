@@ -20,6 +20,7 @@ export default class UserController extends Controller {
     const user = await app.model.User.create({
       username,
       password,
+      sex: '保密',
     });
     if (!user) {
       ctx.throw(400, '创建账号失败!');
