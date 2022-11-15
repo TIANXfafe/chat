@@ -2,6 +2,7 @@ module.exports = (_, app) => {
   return async (ctx, next) => {
     // 获取header头token
     const { token = '' } = ctx.header;
+    ctx.logger.info(`请求：${ctx.request.method}---------${ctx.request.url}`);
     if (!token) {
       return ctx.apiFail('您没有权限访问该接口!');
     }
