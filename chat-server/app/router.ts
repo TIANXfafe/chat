@@ -9,6 +9,10 @@ export default (app: Application) => {
   router.post('/login', controller.user.login);
   // 退出登录
   router.post('/logout', controller.user.logout);
+  // 获取用户信息
+  router.post('/fetchUserInfo', controller.user.fetchUserInfo);
+  // 修改用户信息
+  router.post('/changeInfo', controller.user.changeInfo);
 
   // 搜索用户
   router.post('/search/user', controller.search.user);

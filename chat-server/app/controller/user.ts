@@ -60,6 +60,50 @@ export default class UserController extends Controller {
     }
     ctx.apiSuccess('退出成功!');
   }
+  // 查询用户信息
+  public async fetchUserInfo() {
+    const { ctx, app } = this;
+    const currentUserId = ctx.authUser.id;
+    const user = await app.model.User.findOne({
+      where: {
+        id: currentUserId,
+      },
+      attributes: {
+        exclude: [ 'password' ],
+      },
+    });
+    if (!user) {
+      ctx.throw(400, '用户不存在');
+    }
+    ctx.apiSuccess(user);
+  }
+  // 修改个人信息
+  public async changeInfo() {
+    const { ctx, app } = this;
+    const { nickname, sex } = ctx.request.body;
+    const currentUserId = ctx.authUser.id;
+    const user = await app.model.User.findByPk(currentUserId);
+    console.log('user', user);
+    if (!user) {
+      ctx.throw(400, '用户不存在');
+    }
+    let gender;
+    switch (sex) {
+      case 'male':
+        gender = '男';
+        break;
+      case 'female':
+        gender = '女';
+        break;
+      default:
+        gender = '保密';
+        break;
+    }
+    user.nickname = nickname;
+    user.sex = gender;
+    await user.save();
+    ctx.apiSuccess('ok');
+  }
 
   // 验证密码
   public async checkPassword(password, hash_password) {
