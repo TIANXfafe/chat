@@ -17,3 +17,14 @@ export const logout = () => request({
   url: '/logout',
   method: 'post'
 })
+// 获取用户信息
+export const fetchUserInfo = () => request({
+  url: '/fetchUserInfo',
+  method: 'post'
+})
+// 修改用户信息
+export const changeInfo = (data: any) => request({
+  url: '/changeInfo',
+  method: 'post',
+  body: data
+})

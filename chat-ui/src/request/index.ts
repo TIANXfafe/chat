@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import Qs from 'qs';
 import {errorMsg, handleCommonError, handleNoCommontError} from "./errorHandle";
 import toast from "react-hot-toast";
-import {getLocalStorage} from "../utils/storage";
+import { getSessionStorage } from "../utils/storage";
 
 type requestOptions = AxiosRequestConfig & {
   url: string
@@ -63,7 +63,7 @@ export default async function request(options: requestOptions) {
   // @ts-ignore
   delete options.url
 
-  const token = getLocalStorage('userToken')
+  const token = getSessionStorage('userToken')
   // const Authorization = getLocalStorage(authKey)
   let headers = {}
   if (options) {

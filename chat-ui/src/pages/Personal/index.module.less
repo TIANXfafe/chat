@@ -24,22 +24,90 @@
       .infoCard {
         width: 100%;
         height: 100%;
-        background: pink;
-        border-radius: 20px;
+        background: linear-gradient(to bottom right, #E384E5, #7EF5E5);
+        border-radius: 50px;
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 80px 20px;
+        cursor: pointer;
+        color: #fff;
+        gap: 20px;
+
+        .avatar {
+          border: 2px solid #fff;
+          transition: all .2s;
+
+          &:hover {
+            transform: scale(1.2);
+          }
+        }
+
+        .infoContent {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 20px;
+          width: 100%;
+          height: 100%;
+
+          .nickname {
+            font-weight: bold;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: center;
+            font-size: 16px;
+          }
+
+          .detail {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+
+            & > span {
+              font-size: 13px;
+              display: inline-block;
+              padding: 5px 10px;
+              background: rgba(255, 255, 255, .3);
+              border-radius: 5px;
+            }
+          }
+        }
       }
     }
 
     .cardAction {
       width: 100%;
-      background: red;
       flex-grow: 1;
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 
   .rightContent {
     height: 100%;
-    background: orange;
-    flex: 2;
+    background: #fff;
+    flex-grow: 1;
+    border-radius: 50px;
+    overflow: hidden;
+    padding: 50px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .btnContainer {
+      margin-top: 50px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
   }
 }

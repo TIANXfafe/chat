@@ -41,7 +41,7 @@ const Index = () => {
     console.log('userInfo', userInfo);
     // @ts-ignore
     const {nickname, avatar} = JSON.parse(userInfo) || {nickname: "", avatar: ""};
-    if (!avatar || !nickname) {
+    if (!avatar && !nickname) {
       setVisible(true)
     }
   }, [])

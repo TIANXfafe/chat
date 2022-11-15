@@ -58,10 +58,9 @@ const Index = () => {
       toast.error((err as string));
     }
   }
-
   return (
     <nav className={styles.sidebar}>
-      <Avatar src={face1} />
+      <Avatar src={face1} onClick={() => navigator('/personal')} />
       <section className={styles.menuContent}>
         {/*<Menu />*/}
         <NavLink
