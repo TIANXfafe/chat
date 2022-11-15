@@ -17,7 +17,15 @@ const Index = () => {
 
   return (
     <animated.section className={styles.personal} style={spring}>
-      personalInfo
+      <div className={styles.leftContent}>
+        <div className={styles.cardContent}>
+          <div className={styles.infoCard}>
+            hhh
+          </div>
+        </div>
+        <div className={styles.cardAction}>456</div>
+      </div>
+      <div className={styles.rightContent}>2</div>
     </animated.section>
   );
 };

@@ -1,7 +1,45 @@
 .personal {
   width: 100%;
   height: 100%;
-  background: skyblue;
-  border-radius: 20px;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+
+  .leftContent {
+    max-width: 360px;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    .cardContent {
+      width: 100%;
+      height: 420px;
+      padding: 10px;
+
+      .infoCard {
+        width: 100%;
+        height: 100%;
+        background: pink;
+        border-radius: 20px;
+        overflow: hidden;
+      }
+    }
+
+    .cardAction {
+      width: 100%;
+      background: red;
+      flex-grow: 1;
+    }
+  }
+
+  .rightContent {
+    height: 100%;
+    background: orange;
+    flex: 2;
+  }
 }
