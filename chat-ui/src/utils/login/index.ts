@@ -1,5 +1,5 @@
 import {login} from "../../request/api";
-import {setLocalStorage} from "../storage";
+import {setSessionStorage} from "../storage";
 import toast from "react-hot-toast";
 
 type LoginForm = {
@@ -18,9 +18,9 @@ const handleLogin = async (data: LoginForm) => {
       delete userInfo.token;
       delete userInfo.created_at;
       delete userInfo.updated_at;
-      setLocalStorage('userToken', token);
-      setLocalStorage('userInfo', JSON.stringify(userInfo));
-      setLocalStorage('loginTime', JSON.stringify(loginTime));
+      setSessionStorage('userToken', token);
+      setSessionStorage('userInfo', JSON.stringify(userInfo));
+      setSessionStorage('loginTime', JSON.stringify(loginTime));
       return true
     }
   } catch (err) {

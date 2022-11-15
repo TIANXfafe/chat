@@ -3,7 +3,7 @@ import styles from './index.module.less';
 import LoginForm from "../../components/LoginForm";
 import RegisterForm from "../../components/RegisterForm";
 import {HandLeft, HandRight} from '@icon-park/react';
-import maskImg from '../../assets/images/19.png';
+import maskImg from '../../assets/images/18.png';
 
 const Index = () => {
   // 遮罩层样式

@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 //引入qs模块，用来序列化post类型的数据
 import Qs from 'qs';
-// import { getLocalStorage } from '../utils/storage';
 import {errorMsg, handleCommonError, handleNoCommontError} from "./errorHandle";
 import toast from "react-hot-toast";
 import {getLocalStorage} from "../utils/storage";

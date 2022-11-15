@@ -4,7 +4,7 @@ import { Banner, Button } from '@douyinfe/semi-ui';
 import {toast} from 'react-hot-toast';
 
 import checkLogin from '../../utils/checkLogin';
-import { clearLocalStorage, getLocalStorage } from '../../utils/storage';
+import {clearSessionStorage, getSessionStorage} from '../../utils/storage';
 import Sider from './Sider';
 import styles from './index.module.less';
 
@@ -30,17 +30,17 @@ const Index = () => {
       }
     />
   );
-  
+
   useEffect(() => {
     if (!checkLogin()) {
       toast.error('登录超时，请重新登录!');
-      clearLocalStorage();
+      clearSessionStorage();
       navigator('/login');
     }
-    const userInfo = getLocalStorage('userInfo');
+    const userInfo = getSessionStorage('userInfo');
     console.log('userInfo', userInfo);
     // @ts-ignore
-    const {nickname, avatar} = JSON.parse(userInfo);
+    const {nickname, avatar} = JSON.parse(userInfo) || {nickname: "", avatar: ""};
     if (!avatar || !nickname) {
       setVisible(true)
     }

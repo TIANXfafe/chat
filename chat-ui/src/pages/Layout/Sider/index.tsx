@@ -5,7 +5,7 @@ import styles from './index.module.less';
 import face1 from "../../../assets/images/face-male-1.jpg";
 import {logout} from "../../../request/api";
 import toast from "react-hot-toast";
-import {clearLocalStorage} from "../../../utils/storage";
+import {clearSessionStorage} from "../../../utils/storage";
 import {NavLink, useNavigate} from "react-router-dom";
 import router from '../../../router';
 
@@ -52,7 +52,7 @@ const Index = () => {
     try {
       const res = await logout();
       toast.success('退出成功!');
-      clearLocalStorage();
+      clearSessionStorage();
       navigator('/login');
     } catch (err) {
       toast.error((err as string));

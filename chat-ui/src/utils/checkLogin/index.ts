@@ -1,9 +1,9 @@
-import {getLocalStorage} from "../storage";
+import {getSessionStorage} from "../storage";
 
 const checkLogin = () => {
   const endTime = new Date().getTime();
-  const startTime = getLocalStorage('loginTime') || endTime;
-  const token = getLocalStorage('userToken');
+  const startTime = getSessionStorage('loginTime') || endTime;
+  const token = getSessionStorage('userToken');
   // @ts-ignore
   return token && endTime - startTime <= 24 * 60 * 60 * 1000 && endTime - startTime > 0;
 };
