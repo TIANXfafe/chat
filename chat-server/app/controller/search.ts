@@ -5,6 +5,7 @@ export default class SearchController extends Controller {
   public async user() {
     const { ctx, app } = this;
     const { keyword } = ctx.request.body;
+    console.log('keyword', keyword);
     const data = await app.model.User.findOne({
       where: {
         username: keyword,

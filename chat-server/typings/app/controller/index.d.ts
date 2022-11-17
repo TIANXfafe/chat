@@ -8,6 +8,7 @@ import ExportFriend from '../../../app/controller/friend';
 import ExportHome from '../../../app/controller/home';
 import ExportReport from '../../../app/controller/report';
 import ExportSearch from '../../../app/controller/search';
+import ExportUpload from '../../../app/controller/upload';
 import ExportUser from '../../../app/controller/user';
 
 declare module 'egg' {
@@ -18,6 +19,7 @@ declare module 'egg' {
     home: ExportHome;
     report: ExportReport;
     search: ExportSearch;
+    upload: ExportUpload;
     user: ExportUser;
   }
 }

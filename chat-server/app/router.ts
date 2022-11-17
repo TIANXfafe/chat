@@ -3,6 +3,9 @@ import { Application } from 'egg';
 export default (app: Application) => {
   const { controller, router } = app;
 
+  // 上传图片
+  router.post('/upload', controller.upload.upload);
+
   // 用户注册
   router.post('/register', controller.user.register);
   // 用户登录

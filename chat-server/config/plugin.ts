@@ -37,6 +37,11 @@ const plugin: EggPlugin = {
     enable: true,
     package: 'egg-websocket-plugin',
   },
+  // oss
+  oss: {
+    enable: true,
+    package: 'egg-oss',
+  },
 };
 
 export default plugin;

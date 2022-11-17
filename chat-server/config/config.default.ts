@@ -11,7 +11,7 @@ export default (appInfo: EggAppInfo) => {
   config.middleware = [ 'errorHandler', 'auth' ];
 
   config.auth = {
-    ignore: [ '/register', '/login' ],
+    ignore: [ '/register', '/login', '/upload' ],
   };
 
   // add your special config in here
@@ -77,6 +77,19 @@ export default (appInfo: EggAppInfo) => {
       host: '127.0.0.1',
       password: '',
       db: 0,
+    },
+  };
+  config.multipart = {
+    mode: 'file',
+  };
+  // oss
+  config.oss = {
+    client: {
+      accessKeyId: 'xxx',
+      accessKeySecret: 'xxx',
+      bucket: 'xxx',
+      endpoint: 'xxx',
+      timeout: '120s',
     },
   };
 

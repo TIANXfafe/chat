@@ -17,4 +17,8 @@ module.exports = {
   checkToken(token) {
     return this.app.jwt.verify(token, this.app.config.jwt.secret);
   },
+  // 生成唯一id
+  getID(length) {
+    return Number(Math.random().toString().substr(3, length) + Date.now()).toString(36);
+  },
 };

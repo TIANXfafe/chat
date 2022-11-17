@@ -20,6 +20,7 @@ import 'egg-valparams';
 import 'egg-jwt';
 import 'egg-redis';
 import 'egg-websocket-plugin';
+import 'egg-oss';
 import { EggPluginItem } from 'egg';
 declare module 'egg' {
   interface EggPlugin {
@@ -41,5 +42,6 @@ declare module 'egg' {
     jwt?: EggPluginItem;
     redis?: EggPluginItem;
     websocket?: EggPluginItem;
+    oss?: EggPluginItem;
   }
 }
