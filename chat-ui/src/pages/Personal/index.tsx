@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { animated, config, useSpring } from 'react-spring';
-import { Form, Row, Button } from '@douyinfe/semi-ui';
-import { IconTick } from '@douyinfe/semi-icons';
+import { Form, Row, Button, Upload } from '@douyinfe/semi-ui';
+import { IconTick, IconPlus } from '@douyinfe/semi-icons';
 import styles from './index.module.less';
 import Avatar from '../../components/Avatar';
 import face1 from '../../assets/images/face-male-1.jpg';
@@ -11,11 +11,11 @@ import feperson from '../../assets/images/common/feperson.webp';
 import { getSessionStorage, setSessionStorage } from "../../utils/storage";
 import { fetchUserInfo, changeInfo } from "../../request/api";
 import toast from "react-hot-toast";
+import avatar from "../../components/Avatar";
 
 const Index = () => {
   const [ info, setInfo ] = useState<any>({});
-  // const [ formData, setFormData ] = useState()
-  // const { Section, Input, Select, DatePicker } = Form;
+  const [avatarImg, setAvatarImg] = useState<string>("");
   const { Section, Input, Select } = Form;
 
   const spring = useSpring({
@@ -31,7 +31,9 @@ const Index = () => {
   });
 
   const submitForm = async (value: any) => {
-    const res = await changeInfo(value);
+    const form = value;
+    form.avatar = avatarImg;
+    const res = await changeInfo(form);
     if (res.data === 'ok') {
       const userInfo = await fetchUserInfo();
       if (userInfo.data) {
@@ -40,6 +42,16 @@ const Index = () => {
       }
     } else {
       toast.error('提交失败!');
+    }
+  }
+
+  const onSuccess = (responseBody: any) => {
+    console.log('responseBody', responseBody)
+    if (responseBody.msg === '上传成功!') {
+      toast.success('上传成功!')
+      setAvatarImg(responseBody.data.url)
+    } else {
+      toast.error('上传失败!');
     }
   }
 
@@ -55,7 +67,7 @@ const Index = () => {
       <div className={ styles.leftContent }>
         <div className={ styles.cardContent }>
           <div className={ styles.infoCard }>
-            <Avatar src={ face1 } size="80px" className={ styles.avatar }/>
+            <Avatar src={ info.avatar || face1 } size="80px" className={ styles.avatar }/>
             <div className={ styles.infoContent }>
               <div className={ styles.nickname }>{ info.nickname || info.username }</div>
               <div className={ styles.detail }>
@@ -81,17 +93,16 @@ const Index = () => {
       <div className={ styles.rightContent }>
         <Form style={ { padding: 10, width: '100%' } } onSubmit={submitForm}>
           <Section text={ '基本信息' }>
-            {/* <Row>
+            <Row>
               <Upload
-                action={ action }
-                prompt={ getPrompt(pos, true) }
-                promptPosition={ pos }
+                action="/api/upload"
                 listType="picture"
-                defaultFileList={ defaultFileList }
+                onSuccess={onSuccess}
+                limit={1}
               >
                 <IconPlus size="extra-large"/>
               </Upload>
-            </Row> */ }
+            </Row>
             <Row>
               <Input
                 field="nickname"

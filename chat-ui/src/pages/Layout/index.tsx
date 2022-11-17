@@ -6,12 +6,14 @@ import {toast} from 'react-hot-toast';
 import checkLogin from '../../utils/checkLogin';
 import {clearSessionStorage, getSessionStorage} from '../../utils/storage';
 import Sider from './Sider';
+import GlobalContext from '../../store/common/global';
 import styles from './index.module.less';
 
 const Index = () => {
   const navigator = useNavigate();
 
   const [visible, setVisible] = useState<boolean>(false);
+  const [globalInfo, setGlobalInfo] = useState<any>({});
 
   const jumpToPersonal = () => {
     navigator('/personal');
@@ -38,7 +40,9 @@ const Index = () => {
       navigator('/login');
     }
     const userInfo = getSessionStorage('userInfo');
-    console.log('userInfo', userInfo);
+    console.log('aaa', userInfo)
+    // @ts-ignore
+    setGlobalInfo(JSON.parse(userInfo));
     // @ts-ignore
     const {nickname, avatar} = JSON.parse(userInfo) || {nickname: "", avatar: ""};
     if (!avatar && !nickname) {
@@ -47,7 +51,7 @@ const Index = () => {
   }, [])
 
   return (
-    <>
+    <GlobalContext.Provider value={globalInfo}>
       {visible ? banner : null}
       <section className={styles.layout}>
         <Sider />
@@ -55,7 +59,7 @@ const Index = () => {
           <Outlet />
         </section>
       </section>
-    </>
+    </GlobalContext.Provider>
   );
 };
 

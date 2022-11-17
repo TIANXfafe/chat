@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {AddressBook, Communication, Config, FolderQuality, Power} from "@icon-park/react";
 import Avatar from "../../../components/Avatar";
 import styles from './index.module.less';
@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import {clearSessionStorage} from "../../../utils/storage";
 import {NavLink, useNavigate} from "react-router-dom";
 import router from '../../../router';
+import GlobalContext from "../../../store/common/global";
 
 const Menu = () => {
   const [routes, setRoutes] = useState<any>([]);
@@ -43,7 +44,15 @@ const Menu = () => {
 }
 
 const Index = () => {
+  const ctx: any = useContext(GlobalContext);
+  const [avatarImg, setAvatarImg] = useState<string>("");
+
   const navigator = useNavigate();
+
+  useEffect(() => {
+    console.log('ccc', ctx)
+    setAvatarImg(ctx.avatar);
+  }, [ctx])
 
   /**
    * 退出登录
@@ -60,7 +69,7 @@ const Index = () => {
   }
   return (
     <nav className={styles.sidebar}>
-      <Avatar src={face1} onClick={() => navigator('/personal')} />
+      <Avatar src={avatarImg} onClick={() => navigator('/personal')} />
       <section className={styles.menuContent}>
         {/*<Menu />*/}
         <NavLink

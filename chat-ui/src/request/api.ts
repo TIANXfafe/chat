@@ -28,3 +28,9 @@ export const changeInfo = (data: any) => request({
   method: 'post',
   body: data
 })
+// 搜索好友
+export const searchUser = (data: any) => request({
+  url: '/search/user',
+  method: 'post',
+  body: data
+})

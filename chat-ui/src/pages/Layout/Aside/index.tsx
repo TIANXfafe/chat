@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
 import styles from './index.module.less';
 import {AddOne, PeopleSpeak, Pin} from "@icon-park/react";
@@ -11,10 +11,12 @@ import {IconSearch, IconClose, IconTick} from '@douyinfe/semi-icons';
 import sunny from '../../../assets/images/weather/sunny.png';
 import toast from "react-hot-toast";
 import useSequenceList from "../../../hooks/useSequenceList";
+import { searchUser } from "../../../request/api";
 
 const Index = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [searchInfo, setSearchInfo] = useState<string>("");
+  const [friendData, setFriendData] = useState<any>();
 
   const navigator = useNavigate();
   const jumpToChat = () => {
@@ -24,9 +26,13 @@ const Index = () => {
   const topTrailAnimate = useStaggeredList(2)
   const normalTrailAnimate = useStaggeredList(15)
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (searchInfo.trim()) {
-      console.log(1111)
+      const res: any = await searchUser({keyword: searchInfo});
+      console.log('res', res)
+      if (res.msg === 'ok') {
+        setFriendData(res.data);
+      }
     } else {
       toast.error('请输入搜索内容!');
     }
@@ -341,6 +347,7 @@ const Index = () => {
         visible={visible}
         closeOnEsc={false}
         onCancel={() => setVisible(false)}
+        className={styles.modal}
         footer={
           <>
             <Button
@@ -364,11 +371,20 @@ const Index = () => {
         }
       >
         <Input
-          placeholder='请输入账号或昵称!'
+          placeholder='请输入昵称!'
           prefix={<IconSearch/>}
           showClear
           onChange={(value) => setSearchInfo(value)}
         />
+        {
+          friendData ? (
+            <div>
+              <div className={styles.friendItem}>
+                123
+              </div>
+            </div>
+          ) : null
+        }
       </Modal>
     </aside>
   );

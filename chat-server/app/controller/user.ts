@@ -80,7 +80,7 @@ export default class UserController extends Controller {
   // 修改个人信息
   public async changeInfo() {
     const { ctx, app } = this;
-    const { nickname, sex } = ctx.request.body;
+    const { nickname, sex, avatar } = ctx.request.body;
     const currentUserId = ctx.authUser.id;
     const user = await app.model.User.findByPk(currentUserId);
     console.log('user', user);
@@ -101,6 +101,7 @@ export default class UserController extends Controller {
     }
     user.nickname = nickname;
     user.sex = gender;
+    user.avatar = avatar;
     await user.save();
     ctx.apiSuccess('ok');
   }
