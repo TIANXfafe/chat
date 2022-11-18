@@ -11,7 +11,7 @@ export default (appInfo: EggAppInfo) => {
   config.middleware = [ 'errorHandler', 'auth' ];
 
   config.auth = {
-    ignore: [ '/register', '/login', '/upload' ],
+    ignore: [ '/register', '/login', '/upload', '/uploadCommon' ],
   };
 
   // add your special config in here
@@ -81,6 +81,7 @@ export default (appInfo: EggAppInfo) => {
   };
   config.multipart = {
     mode: 'file',
+    fileSize: 104857600,
   };
   // oss
   config.oss = {
