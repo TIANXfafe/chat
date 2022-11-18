@@ -3,8 +3,16 @@ import { Application } from 'egg';
 export default (app: Application) => {
   const { controller, router } = app;
 
-  // 上传图片
-  router.post('/upload', controller.upload.upload);
+  // 上传头像
+  router.post('/upload', controller.common.uploadAvatar);
+  // 上传静态资源
+  router.post('/uploadCommon', controller.common.uploadCommon);
+  // 省市区数据（树形结构）
+  router.get('/cityList', controller.common.cityList);
+  // 省市区数据（扁平化）
+  router.get('/flatCityList', controller.common.flatCityList);
+  // 根据id查询省市区name
+  router.post('/fetchCityName', controller.common.fetchCityName);
 
   // 用户注册
   router.post('/register', controller.user.register);
