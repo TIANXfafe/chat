@@ -1,23 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { animated, config, useSpring } from 'react-spring';
-import { Form, Row, Button, Upload } from '@douyinfe/semi-ui';
-import { IconTick, IconPlus } from '@douyinfe/semi-icons';
-import styles from './index.module.less';
-import Avatar from '../../components/Avatar';
-import face1 from '../../assets/images/face-male-1.jpg';
-import male from '../../assets/images/common/male.webp';
-import female from '../../assets/images/common/female.webp';
-import feperson from '../../assets/images/common/feperson.webp';
-import { getSessionStorage, setSessionStorage } from "../../utils/storage";
-import { fetchUserInfo, changeInfo } from "../../request/api";
+import React, {useEffect, useState} from 'react';
+import {animated, config, useSpring} from 'react-spring';
+import {Button, Form, Row} from '@douyinfe/semi-ui';
+import {IconPlus, IconTick} from '@douyinfe/semi-icons';
 import toast from "react-hot-toast";
-import avatar from "../../components/Avatar";
+
+import {getSessionStorage, setSessionStorage} from "../../utils/storage";
+import {changeInfo, cityList, fetchCityName, fetchUserInfo} from "../../request/api";
+import Avatar from '../../components/Avatar';
+
+import styles from './index.module.less';
+import face1 from '../../assets/images/face-male-1.jpg';
 
 const Index = () => {
-  const [ info, setInfo ] = useState<any>({});
-  const [avatarImg, setAvatarImg] = useState<string>("");
   const { Section, Input, Select } = Form;
 
+  // 基础信息
+  const [ info, setInfo ] = useState<any>({});
+  // 上传头像
+  const [avatarImg, setAvatarImg] = useState<string>("");
+  // 城市数据
+  const [cityInfo, setCityInfo] = useState<any>([]);
+
+  // 进入动画
   const spring = useSpring({
     config: config.stiff,
     from: {
@@ -30,21 +34,16 @@ const Index = () => {
     }
   });
 
-  const submitForm = async (value: any) => {
-    const form = value;
-    form.avatar = avatarImg;
-    const res = await changeInfo(form);
-    if (res.data === 'ok') {
-      const userInfo = await fetchUserInfo();
-      if (userInfo.data) {
-        setInfo(userInfo.data);
-        setSessionStorage("userInfo", JSON.stringify(userInfo.data));
-      }
+  // 获取区域数据
+  const fetchCity = async () => {
+    const res: any = await cityList();
+    if (res.msg === 'ok') {
+      setCityInfo(res.data)
     } else {
-      toast.error('提交失败!');
+      toast.error('获取城市数据失败!');
     }
   }
-
+  // 图片上传成功事件
   const onSuccess = (responseBody: any) => {
     console.log('responseBody', responseBody)
     if (responseBody.msg === '上传成功!') {
@@ -54,12 +53,47 @@ const Index = () => {
       toast.error('上传失败!');
     }
   }
+  // 提交表单事件
+  const submitForm = async (value: any) => {
+    const form = value;
+    form.avatar = avatarImg;
+    form.area = form.area.join(",");
+    const res = await changeInfo(form);
+    if (res.data === 'ok') {
+      const userInfo = await fetchUserInfo();
+      if (userInfo.data) {
+        setInfo(userInfo.data);
+        setSessionStorage("userInfo", JSON.stringify(userInfo.data));
+        toast.success('修改成功!')
+      }
+    } else {
+      toast.error('提交失败!');
+    }
+  }
+  // 根据id查询省市区name
+  const handleUserInfo = async (city: string[]) => {
+    const res: any = await fetchCityName({city})
+    console.log('res', res)
+    if (res.msg === 'ok') {
+      return res.data.map((item: { label: string }) => item.label);
+    } else {
+      toast.error('城市信息错误!');
+    }
+  }
 
   useEffect(() => {
     const userInfo = getSessionStorage('userInfo');
     if(userInfo) {
-      setInfo(JSON.parse(userInfo));
+      const userObj = JSON.parse(userInfo)
+      if (userObj.area) {
+        (async () => {
+          const areaArr = await handleUserInfo(userObj.area.split(","));
+          userObj.area = areaArr.join(",");
+        })()
+      }
+      setInfo(userObj);
     }
+    fetchCity().then();
   }, [])
 
   return (
@@ -81,11 +115,11 @@ const Index = () => {
         <div className={ styles.cardAction }>
           {
             info.sex === "男" ? (
-              <img src={ male } alt=""/>
+              <img src="http://chatserver.oss-cn-shanghai.aliyuncs.com/common/6j3g629yujw0000.webp" alt=""/>
             ) : info.sex === "女" ? (
-              <img src={ female } alt=""/>
+              <img src="http://chatserver.oss-cn-shanghai.aliyuncs.com/common/d6qrokqhu8o0000.webp" alt=""/>
             ) : (
-              <img src={ feperson } alt=""/>
+              <img src="http://chatserver.oss-cn-shanghai.aliyuncs.com/common/4cppnx9dvps0000.webp" alt=""/>
             )
           }
         </div>
@@ -94,14 +128,16 @@ const Index = () => {
         <Form style={ { padding: 10, width: '100%' } } onSubmit={submitForm}>
           <Section text={ '基本信息' }>
             <Row>
-              <Upload
+              <Form.Upload
+                field='files'
+                label='头像'
                 action="/api/upload"
                 listType="picture"
                 onSuccess={onSuccess}
                 limit={1}
               >
                 <IconPlus size="extra-large"/>
-              </Upload>
+              </Form.Upload>
             </Row>
             <Row>
               <Input
@@ -110,12 +146,9 @@ const Index = () => {
                 initValue={ info.nickname }
                 trigger='blur'
                 style={ { width: '100%' } }
+                placeholder="请输入昵称"
               />
             </Row>
-            {/* <Row>
-              <DatePicker style={ { width: '100%' } } field="date" label='生日' initValue={ new Date() }
-                          placeholder='请选择出生日期'/>
-            </Row> */ }
             <Row>
               <Select field="sex" style={ { width: '100%' } } label='性别' placeholder='请选择你的性别'>
                 <Select.Option value="fePerson">保密</Select.Option>
@@ -123,6 +156,14 @@ const Index = () => {
                 <Select.Option value="female">女</Select.Option>
               </Select>
             </Row>
+            <Form.Cascader
+                placeholder="请选择所在地区"
+                treeData={cityInfo}
+                field='area'
+                label='地区'
+                style={{ width: '100%' }}
+            >
+            </Form.Cascader>
             <Row className={ styles.btnContainer }>
               <Button
                 htmlType="submit"

@@ -51,7 +51,7 @@ const Index = () => {
 
   useEffect(() => {
     console.log('ccc', ctx)
-    setAvatarImg(ctx.avatar);
+    setAvatarImg(ctx.avatar || face1);
   }, [ctx])
 
   /**

@@ -1,8 +1,8 @@
 import axios, { AxiosRequestConfig } from "axios";
 //引入qs模块，用来序列化post类型的数据
 import Qs from 'qs';
-import {errorMsg, handleCommonError, handleNoCommontError} from "./errorHandle";
-import toast from "react-hot-toast";
+// import {errorMsg, handleCommonError, handleNoCommontError} from "./errorHandle";
+import {errorMsg, handleNoCommontError} from "./errorHandle";
 import { getSessionStorage } from "../utils/storage";
 
 type requestOptions = AxiosRequestConfig & {
@@ -32,7 +32,6 @@ axios.interceptors.response.use(
   },
   // 错误拦截
   (error) => {
-    console.log('error', error)
     const { response } = error
     // toogleLoading(false)
     // 请求有响应
@@ -87,16 +86,16 @@ export default async function request(options: requestOptions) {
     delete options.headers
   }
   const newOptions: requestOptions = { ...defaultOptions, ...options }
-
-  newOptions.data = newOptions.body
+  newOptions.data = newOptions.body || {}
   if (newOptions.method === 'get') {
-    (newOptions.paramsSerializer as any) = (params: any) => {
-      return Qs.stringify(params, { arrayFormat: 'repeat' })
+    (newOptions.paramsSerializer as any) = {
+      serialize: (params: any) => {
+        return Qs.stringify(params, { arrayFormat: 'repeat' })
+      }
     }
   }
   delete newOptions.body
   // toogleLoading(true)
   const newUrl = baseURL + url
-
   return axios(newUrl, newOptions)
 }

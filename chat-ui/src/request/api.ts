@@ -34,3 +34,14 @@ export const searchUser = (data: any) => request({
   method: 'post',
   body: data
 })
+// 获取所有区域
+export const cityList = () => request({
+  url: '/cityList',
+  method: 'get',
+})
+// 根据省市区id查询name
+export const fetchCityName = (data: any) => request({
+  url: '/fetchCityName',
+  method: 'post',
+  body: data,
+})
