@@ -16,7 +16,6 @@ const Menu = () => {
   useEffect(() => {
     const navRouter = router.routes[0].children;
     setRoutes(navRouter);
-    console.log('rrr', navRouter)
   })
 
   return (
@@ -50,7 +49,6 @@ const Index = () => {
   const navigator = useNavigate();
 
   useEffect(() => {
-    console.log('ccc', ctx)
     setAvatarImg(ctx.avatar || face1);
   }, [ctx])
 

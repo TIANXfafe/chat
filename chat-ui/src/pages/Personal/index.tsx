@@ -15,7 +15,9 @@ const Index = () => {
   const { Section, Input, Select } = Form;
 
   // 基础信息
-  const [ info, setInfo ] = useState<any>({});
+  const [info, setInfo] = useState<any>({});
+  // 初始化表单信息
+  const [initValues, setInitValues] = useState<any>({});
   // 上传头像
   const [avatarImg, setAvatarImg] = useState<string>("");
   // 城市数据
@@ -45,7 +47,6 @@ const Index = () => {
   }
   // 图片上传成功事件
   const onSuccess = (responseBody: any) => {
-    console.log('responseBody', responseBody)
     if (responseBody.msg === '上传成功!') {
       toast.success('上传成功!')
       setAvatarImg(responseBody.data.url)
@@ -73,28 +74,50 @@ const Index = () => {
   // 根据id查询省市区name
   const handleUserInfo = async (city: string[]) => {
     const res: any = await fetchCityName({city})
-    console.log('res', res)
     if (res.msg === 'ok') {
       return res.data.map((item: { label: string }) => item.label);
     } else {
       toast.error('城市信息错误!');
     }
   }
+  // 处理form初始化数据
+  const handleInitValue = (userInfo: any) => {
+    const {nickname, avatar, area, sex} = JSON.parse(userInfo);
+    console.log('nickname', nickname)
+    console.log('avatar', avatar)
+    console.log('area', area)
+    console.log('sex', sex)
+    setInitValues({
+      nickname,
+      files: avatar,
+      area: area.split(",")
+    })
+  }
+
 
   useEffect(() => {
     const userInfo = getSessionStorage('userInfo');
-    if(userInfo) {
-      const userObj = JSON.parse(userInfo)
-      if (userObj.area) {
-        (async () => {
+    let userObj
+    if (typeof userInfo === "string") {
+      userObj = JSON.parse(userInfo);
+    }
+    (async () => {
+      await fetchCity();
+      // handleInitValue(userInfo);
+      if(userInfo) {
+        if (userObj.area) {
           const areaArr = await handleUserInfo(userObj.area.split(","));
           userObj.area = areaArr.join(",");
-        })()
+        }
+        setInfo(userObj);
       }
-      setInfo(userObj);
-    }
-    fetchCity().then();
+    })()
   }, [])
+
+  useEffect(() => {
+    console.log('initValues', initValues)
+  },[initValues]);
+
 
   return (
     <animated.section className={ styles.personal } style={ spring }>
@@ -125,7 +148,11 @@ const Index = () => {
         </div>
       </div>
       <div className={ styles.rightContent }>
-        <Form style={ { padding: 10, width: '100%' } } onSubmit={submitForm}>
+        <Form
+          style={{ padding: 10, width: '100%' }}
+          initValues={initValues}
+          onSubmit={submitForm}
+        >
           <Section text={ '基本信息' }>
             <Row>
               <Form.Upload

@@ -45,7 +45,6 @@ export default class UserController extends Controller {
     const token = ctx.getToken(user);
     user.token = token;
     delete user.password;
-    console.log('aaaa', token);
     if (!await this.service.cache.set(`user_${user.id}`, token)) {
       ctx.throw(400, '登录失败!');
     }

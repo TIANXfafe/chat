@@ -40,7 +40,6 @@ const Index = () => {
       navigator('/login');
     }
     const userInfo = getSessionStorage('userInfo');
-    console.log('aaa', userInfo)
     // @ts-ignore
     setGlobalInfo(JSON.parse(userInfo));
     // @ts-ignore
