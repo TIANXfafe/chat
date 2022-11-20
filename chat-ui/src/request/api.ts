@@ -51,3 +51,14 @@ export const addFriend = (data: any) => request({
   method: 'post',
   body: data
 })
+// 获取申请列表
+export const applyList = (page: number, limit: number = 10) => request({
+  url: `/apply/${page}?limit=${limit}`,
+  method: 'post'
+})
+// 处理好友申请
+export const handleFriendApply = (id: number, data: any) => request({
+  url: `/apply/handle/${id}`,
+  method: 'post',
+  body: data
+})

@@ -1,6 +1,7 @@
 import { Controller } from 'egg';
 
 export default class ApplyController extends Controller {
+  // 添加好友
   public async addFriend() {
     const { ctx, app } = this;
     const currentUserId = ctx.authUser.id;
@@ -45,7 +46,7 @@ export default class ApplyController extends Controller {
     }
     ctx.apiSuccess(result);
   }
-
+  // 获取好友申请列表
   public async list() {
     const { ctx, app } = this;
     const currentUserId = ctx.authUser.id;
@@ -71,7 +72,7 @@ export default class ApplyController extends Controller {
     });
     ctx.apiSuccess({ result, count });
   }
-
+  // 处理好友申请
   public async handle() {
     const { ctx, app } = this;
     const currentUserId = ctx.authUser.id;

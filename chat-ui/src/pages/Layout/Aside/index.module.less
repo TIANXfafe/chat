@@ -22,22 +22,27 @@
     align-items: center;
     justify-content: space-between;
 
-    .sideBtn {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      cursor: pointer;
-      border: none;
-      background: #C96FD1;
-      padding: 7.5px;
-      transition: all .2s;
+    .btnGroup {
+      display: flex;
+      gap: 10px;
 
-      &:hover {
-        transform: scale(1.1);
-      }
+      .sideBtn {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        cursor: pointer;
+        border: none;
+        background: #C96FD1;
+        padding: 7.5px;
+        transition: all .2s;
 
-      &:active {
-        transform: scale(0.9);
+        &:hover {
+          transform: scale(1.1);
+        }
+
+        &:active {
+          transform: scale(0.9);
+        }
       }
     }
   }

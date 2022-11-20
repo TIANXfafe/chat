@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
 import styles from './index.module.less';
-import {AddOne, PeopleSpeak, Pin} from "@icon-park/react";
+import {Remind, AddOne, PeopleSpeak, Pin} from "@icon-park/react";
 import Avatar from "../../../components/Avatar";
 import face2 from "../../../assets/images/face-male-2.jpg";
 import {animated} from "react-spring";
@@ -11,7 +11,7 @@ import {IconSearch, IconClose, IconTick} from '@douyinfe/semi-icons';
 import sunny from '../../../assets/images/weather/sunny.png';
 import toast from "react-hot-toast";
 import useSequenceList from "../../../hooks/useSequenceList";
-import {addFriend, searchUser} from "../../../request/api";
+import {addFriend, applyList, handleFriendApply, searchUser} from "../../../request/api";
 
 const Index = () => {
   const navigator = useNavigate();
@@ -21,12 +21,16 @@ const Index = () => {
 
   // 是否展示搜索弹窗
   const [visible, setVisible] = useState<boolean>(false);
+  // 是否展示申请列表弹窗
+  const [applyVisible, setApplyVisible] = useState<boolean>(false);
   // 是否展示滑动侧边栏
   const [sheetVisible, setSheetVisible] = useState<boolean>(false);
   // 搜索输入框内容
   const [searchInfo, setSearchInfo] = useState<string>("");
   // 搜索到的好友信息
   const [friendData, setFriendData] = useState<any>([]);
+  // 申请列表
+  const [applyData, setApplyData] = useState<any>([]);
 
 
   /**
@@ -72,22 +76,74 @@ const Index = () => {
       toast.success('申请提交成功!');
     }
   }
+  /**
+   * 打开申请列表弹窗
+   */
+  const openApplyModal = async () => {
+    setApplyVisible(true);
+    const res: any = await applyList(1, 10);
+    if (res.msg === 'ok' && res.data.count) {
+      setApplyData(res.data.result)
+    }
+  }
+  /**
+   * 处理好友申请
+   * @param applyId 申请id
+   * @param type 1：同意，2：拒绝，3：忽略
+   */
+  const handleApply = async (applyId: number, type: number) => {
+    let status
+    switch (type) {
+      case 1:
+        status = "agree";
+        break;
+      case 2:
+        status = "refuse";
+        break;
+      case 3:
+        status = "ignore";
+        break;
+    }
+    const data ={
+      nickname: "",
+      lookme: 1,
+      lookhim: 1,
+      status
+    }
+    const res: any = await handleFriendApply(applyId, data);
+    if (res.msg === 'ok') {
+      toast.success('处理成功!');
+      const newList = applyData.filter((item: {id: number}) => item.id === applyId)
+      setApplyData(newList);
+    }
+  }
 
   return (
     <aside className={styles.subSidebar}>
       <animated.div style={headerSpring}>
         <section className={styles.sideHeader}>
           <h2 className={styles.sideTitle}>Message</h2>
-          <button className={styles.sideBtn} onClick={() => setVisible(true)}>
-            <AddOne
-              theme="outline"
-              size="25"
-              fill="#fff"
-              strokeWidth={3}
-              strokeLinejoin="bevel"
-              strokeLinecap="square"
-            />
-          </button>
+          <div className={styles.btnGroup}>
+            <button className={styles.sideBtn} onClick={openApplyModal}>
+              <Remind
+                theme="outline"
+                size="25" fill="#fff"
+                strokeWidth={3}
+                strokeLinejoin="bevel"
+                strokeLinecap="square"
+              />
+            </button>
+            <button className={styles.sideBtn} onClick={() => setVisible(true)}>
+              <AddOne
+                  theme="outline"
+                  size="25"
+                  fill="#fff"
+                  strokeWidth={3}
+                  strokeLinejoin="bevel"
+                  strokeLinecap="square"
+              />
+            </button>
+          </div>
         </section>
       </animated.div>
       <animated.div style={headerSpring}>
@@ -409,6 +465,47 @@ const Index = () => {
           prefix={<IconSearch/>}
           showClear
           onChange={(value) => setSearchInfo(value)}
+        />
+      </Modal>
+      <Modal
+        title="申请列表"
+        visible={applyVisible}
+        closeOnEsc={false}
+        onCancel={() => setApplyVisible(false)}
+        footer={
+          <>
+            <Button
+                icon={<IconClose/>}
+                theme='solid'
+                type='tertiary'
+                onClick={() => setApplyVisible(false)}
+            >
+              关闭
+            </Button>
+          </>
+        }
+      >
+        <List
+          dataSource={applyData}
+          renderItem={item => (
+            <Card>
+              <List.Item
+                header={<Avatar src={item.user.avatar} />}
+                main={
+                  <div>
+                    <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}>{item.user.username}</span>
+                  </div>
+                }
+                extra={
+                  <ButtonGroup theme="borderless">
+                    <Button onClick={() => handleApply(item.id, 1)}>同意</Button>
+                    <Button onClick={() => handleApply(item.id, 2)}>拒绝</Button>
+                    <Button onClick={() => handleApply(item.id, 3)}>忽略</Button>
+                  </ButtonGroup>
+                }
+              />
+            </Card>
+          )}
         />
       </Modal>
       <SideSheet title="用户列表" visible={sheetVisible} onCancel={() => setSheetVisible(false)}>
