@@ -11,7 +11,7 @@ import {IconSearch, IconClose, IconTick} from '@douyinfe/semi-icons';
 import sunny from '../../../assets/images/weather/sunny.png';
 import toast from "react-hot-toast";
 import useSequenceList from "../../../hooks/useSequenceList";
-import { searchUser } from "../../../request/api";
+import {addFriend, searchUser} from "../../../request/api";
 
 const Index = () => {
   const navigator = useNavigate();
@@ -60,8 +60,17 @@ const Index = () => {
   /**
    * 添加好友按钮点击事件
    */
-  const addFriends = () => {
-    console.log('addFriends')
+  const handleAddFriend = async (friendInfo: any) => {
+    const params = {
+      friend_id: friendInfo.id,
+      lookme: 1,
+      lookhim: 1,
+      nickname: ""
+    }
+    const res: any = await addFriend(params);
+    if (res.msg === 'ok') {
+      toast.success('申请提交成功!');
+    }
   }
 
   return (
@@ -416,8 +425,7 @@ const Index = () => {
                 }
                 extra={
                   <ButtonGroup theme="borderless">
-                    <Button>编辑</Button>
-                    <Button onClick={addFriends}>添加好友</Button>
+                    <Button onClick={() => handleAddFriend(item)}>添加好友</Button>
                   </ButtonGroup>
                 }
               />

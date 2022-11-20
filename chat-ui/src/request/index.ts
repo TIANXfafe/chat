@@ -4,6 +4,7 @@ import Qs from 'qs';
 // import {errorMsg, handleCommonError, handleNoCommontError} from "./errorHandle";
 import {errorMsg, handleNoCommontError} from "./errorHandle";
 import { getSessionStorage } from "../utils/storage";
+import toast from "react-hot-toast";
 
 type requestOptions = AxiosRequestConfig & {
   url: string
@@ -39,6 +40,7 @@ axios.interceptors.response.use(
       const { status, data } = response;
       if (status === 400 || status === 401) {
         // handleCommonError(data, config)
+        toast.error(data.data);
         return Promise.reject(data.data)
       }
       handleNoCommontError(errorMsg)

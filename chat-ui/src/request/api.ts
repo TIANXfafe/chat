@@ -45,3 +45,9 @@ export const fetchCityName = (data: any) => request({
   method: 'post',
   body: data,
 })
+// 添加好友
+export const addFriend = (data: any) => request({
+  url: '/apply/addFriend',
+  method: 'post',
+  body: data
+})
