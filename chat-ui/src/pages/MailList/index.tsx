@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {TextMessage, PhoneCall} from "@icon-park/react";
 import {config, animated, useChain, useSpring, useSpringRef, useTransition} from "react-spring";
 
 import styles from './index.module.less';
 import Avatar from '../../components/Avatar';
 import face1 from '../../assets/images/face-male-1.jpg';
+import {friendList} from "../../request/api";
 
 const data = [
   {
@@ -67,6 +68,18 @@ const Index = () => {
       scale: 1
     }
   });
+
+  /**
+   * 获取好友列表
+   */
+  const fetchFriendList = async () => {
+    const res = await friendList();
+    console.log('res', res);
+  }
+
+  useEffect(() => {
+    fetchFriendList()
+  }, [])
 
 
   useChain([springApi, transApi], [0, 0.1]);

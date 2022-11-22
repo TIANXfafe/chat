@@ -62,3 +62,8 @@ export const handleFriendApply = (id: number, data: any) => request({
   method: 'post',
   body: data
 })
+// 获取通讯录列表
+export const friendList = () => request({
+  url: '/friend/list',
+  method: 'get'
+})
